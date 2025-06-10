@@ -14,3 +14,4 @@ __pycache__/
 *.pem
 
 .cache/
+.ssh/id_ed25519*
