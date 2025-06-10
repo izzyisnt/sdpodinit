@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+import importlib
+import subprocess
+import os
+import site
+from colorama import init, Fore, Style
+
+# Initialize colorama
+init(autoreset=True)
+
+print("🛠️  VALIDATOR VERSION: v2.2-colorama")
+print("🔍 Validating SurfDock environment...\n")
+
+MODULES = {
+    "numpy": "1.24.4",
+    "scipy": "1.8.1",
+    "pandas": "2.1.2",
+    "sklearn": "1.3.2",
+    "torchmetrics": "1.2.1",
+    "torch_ema": "0.3",
+    "e3nn": "0.5.1",
+    "pyg_lib": None,
+    "torch_scatter": None,
+    "torch_sparse": None,
+    "torch_cluster": None,
+    "torch_spline_conv": None,
+    "rdkit": None,
+    "openmm": "8.2",
+    "Bio": "1.79",  # biopython
+    "prody": "2.5.0",
+    "babel": "2.13.1",
+    "biopandas": "0.4.1",
+    "trimesh": None,
+    "pymeshfix": None,
+    "plyfile": None,
+    "loguru": None,
+    "prefetch_generator": None,
+    "dimorphite_dl": None,
+    "huggingface_hub": "0.17.3",
+    "tokenizers": "0.13.3",
+    "transformers": "4.29.2",
+    "wandb": "0.16.1",
+    "accelerate": "0.15.0",
+    "torch": "2.5.1",
+    "pdbfixer": None,
+    "esm": "2.0.1"
+}
+
+passed = 0
+total = 0
+
+
+def check(msg, passed_flag, detail=""):
+    global passed, total
+    total += 1
+    if passed_flag:
+        print(f"{Fore.GREEN}✅ {msg:<25} — {detail}{Style.RESET_ALL}")
+        passed += 1
+    else:
+        print(f"{Fore.RED}❌ {msg:<25} — {detail}{Style.RESET_ALL}")
+
+
+def check_pymesh2():
+    found = any(
+        os.path.exists(os.path.join(path, 'pymesh2-0.3.1.dist-info'))
+        for path in site.getsitepackages()
+    )
+    check("pymesh2", found, "0.3.1" if found else "NOT FOUND")
+
+
+def check_module(name, expected_version):
+    try:
+        m = importlib.import_module(name)
+        version = getattr(m, "__version__", "ok")
+        if expected_version and not version.startswith(expected_version):
+            print(f"{Fore.YELLOW}⚠️  {name:<22} — {version} (expected {expected_version}){Style.RESET_ALL}")
+        else:
+            check(name, True, version)
+    except Exception:
+        check(name, False, "NOT FOUND")
+
+
+def check_obabel():
+    try:
+        out = subprocess.run(["obabel", "-V"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        check("obabel (OpenBabel)", out.returncode == 0, out.stdout.strip() if out.returncode == 0 else "CLI not working")
+    except FileNotFoundError:
+        check("obabel (OpenBabel)", False, "NOT INSTALLED")
+
+
+def check_openmmforcefields():
+    try:
+        import openmmforcefields
+        try:
+            from importlib.metadata import version
+        except ImportError:
+            from importlib_metadata import version  # fallback for Python <3.8
+
+        try:
+            ff_ver = version("openmmforcefields")
+        except Exception:
+            ff_ver = getattr(openmmforcefields, "__version__", "unknown")
+
+        check("openmmforcefields", True, ff_ver)
+    except ImportError:
+        check("openmmforcefields", False, "NOT INSTALLED")
+
+    try:
+        import importlib_resources
+        check("importlib_resources", True, "ok")
+    except ImportError:
+        check("importlib_resources", False, "MISSING")
+
+
+def check_sshd_config():
+    try:
+        with open("/etc/ssh/sshd_config", "r") as f:
+            content = f.read()
+
+        checks = {
+            "PasswordAuthentication no": "PasswordAuthentication",
+            "PermitRootLogin yes": "PermitRootLogin",
+            "AuthorizedKeysFile .ssh/authorized_keys": "AuthorizedKeysFile"
+        }
+
+        for expected, key in checks.items():
+            lines = [line.strip() for line in content.splitlines() if line.strip() and not line.strip().startswith("#")]
+            match = any(line.startswith(key) and expected.split()[-1] in line for line in lines)
+            check(key, match, expected if match else "MISSING or MISCONFIGURED")
+    except Exception as e:
+        check("sshd_config", False, f"READ ERROR: {e}")
+
+
+# ---- run checks ----
+
+check_pymesh2()
+
+for module, expected in MODULES.items():
+    check_module(module, expected)
+
+check_obabel()
+check_openmmforcefields()
+check_sshd_config()
+
+# ---- summary ----
+print(f"\n🧾 Summary:")
+print(f"{Fore.GREEN if passed == total else Fore.YELLOW}   ✅ {passed} / {total} modules loaded successfully")
+print(f"{Fore.RED if passed < total else Fore.GREEN}   ❌ {total - passed} modules failed{Style.RESET_ALL}")
+
