@@ -15,9 +15,9 @@
 
 # Command Line History (newest to oldest):
 :x
-|2,0,1749579000,,"x"
+|2,0,1749580612,,"x"
 :q
-|2,0,1749575362,,"q"
+|2,0,1749580587,,"q"
 :q!
 |2,0,1749523874,,"q!"
 
@@ -70,65 +70,188 @@
 	    "pymeshfix": None,
 |3,0,0,1,1,0,1749572448,"    \"pymeshfix\": None,"
 ""1	LINE	0
-	#.viminfo
-|3,1,1,1,1,0,1749578999,"#.viminfo"
+	prody apt-get update && apt-get install -y python3.10-dev
+	
+	pip install \
+	  torchmetrics==1.2.1 \
+	  torch-ema==0.3 \
+	  e3nn==0.5.1 \
+	  pyg_lib \
+	  torch_scatter \
+	  torch_sparse \
+	  torch_cluster \
+	  torch_spline_conv \
+	  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html
+	
+	pip install \
+	  torchmetrics==1.2.1 \
+	  torch-ema==0.3 \
+	  e3nn==0.5.1 \
+	  pyg_lib \
+	  torch_scatter \
+	  torch_sparse \
+	  torch_cluster \
+	  torch_spline_conv \
+	  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html
+	
+	pip install \
+	  rdkit-pypi==2022.9.5 \
+	  openmm==8.1.1 \
+	  biopython==1.79 \
+	  prody==2.4.0 \
+	  babel==2.13.1 \
+	  biopandas==0.4.1 \
+	  openbabel==3.1.1.1
+	
+	
+	pip install git+https://github.com/openmm/pdbfixer.git@v1.9
+	
+	pip install \
+	  trimesh \
+	  pymeshfix \
+	  plyfile \
+	  matplotlib \
+	  pyvista
+	
+	
+	pip install \
+	  loguru \
+	  prefetch_generator \
+	  dimorphite_dl \
+	  huggingface-hub==0.17.3 \
+	  tokenizers==0.13.3 \
+|3,1,1,1,50,0,1749580595,"prody apt-get update && apt-get install -y python3.10-dev","","pip install \\","  torchmetrics==1.2.1 \\","  torch-ema==0.3 \\","  e3nn==0.5.1 \\","  pyg_lib \\","  torch_scatter \\","  torch_sparse \\","  torch_cluster \\","  torch_spline_conv \\","  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html","","pip install \\","  torchmetrics==1.2.1 \\","  torch-ema==0.3 \\","  e3nn==0.5.1 \\","  pyg_lib \\","  torch_scatter \\",>19
+|<"  torch_sparse \\","  torch_cluster \\","  torch_spline_conv \\","  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html","","pip install \\","  rdkit-pypi==2022.9.5 \\","  openmm==8.1.1 \\","  biopython==1.79 \\","  prody==2.4.0 \\","  babel==2.13.1 \\","  biopandas==0.4.1 \\","  openbabel==3.1.1.1","","","pip install git+https://github.com/openmm/pdbfixer.git@v1.9","","pip install \\","  trimesh \\","  pymeshfix \\","  plyfile \\","  matplotlib \\","  pyvista","","",>16
+|<"pip install \\","  loguru \\","  prefetch_generator \\","  dimorphite_dl \\","  huggingface-hub==0.17.3 \\","  tokenizers==0.13.3 \\"
 "2	LINE	0
-	.python_history
-|3,0,2,1,1,0,1749578997,".python_history"
+	#.viminfo
+|3,0,2,1,1,0,1749578999,"#.viminfo"
 "3	LINE	0
-	#.profile
-|3,0,3,1,1,0,1749578994,"#.profile"
+	.python_history
+|3,0,3,1,1,0,1749578997,".python_history"
 "4	LINE	0
-	#.bash*
-|3,0,4,1,1,0,1749578993,"#.bash*"
+	#.profile
+|3,0,4,1,1,0,1749578994,"#.profile"
 "5	LINE	0
-	#.ssh/
-|3,0,5,1,1,0,1749578993,"#.ssh/"
+	#.bash*
+|3,0,5,1,1,0,1749578993,"#.bash*"
 "6	LINE	0
-	!.cache/pip/
-|3,0,6,1,1,0,1749578989,"!.cache/pip/"
+	#.ssh/
+|3,0,6,1,1,0,1749578993,"#.ssh/"
 "7	LINE	0
-	.cache/*
-|3,0,7,1,1,0,1749578989,".cache/*"
+	!.cache/pip/
+|3,0,7,1,1,0,1749578989,"!.cache/pip/"
 "8	LINE	0
-	# Ignore everything in .cache except pip
-|3,0,8,1,1,0,1749578988,"# Ignore everything in .cache except pip"
+	.cache/*
+|3,0,8,1,1,0,1749578989,".cache/*"
 "9	LINE	0
-	#
-|3,0,9,1,1,0,1749578922,"#"
+	# Ignore everything in .cache except pip
+|3,0,9,1,1,0,1749578988,"# Ignore everything in .cache except pip"
 "-	CHAR	0
 	HuggingFace
 |3,0,36,0,1,0,1749578941,"HuggingFace"
 
 # File marks:
-'0  1  0  ~/.gitignore
-|4,48,1,0,1749579000,"~/.gitignore"
-'1  1  39  ~/.gitignore
-|4,49,1,39,1749578943,"~/.gitignore"
-'2  1  0  ~/.gitignore
-|4,50,1,0,1749578928,"~/.gitignore"
-'3  1  0  ~/.gitignore
-|4,51,1,0,1749578928,"~/.gitignore"
-'4  3  0  ~/.gitignore
-|4,52,3,0,1749578928,"~/.gitignore"
-'5  3  0  ~/.gitignore
-|4,53,3,0,1749578928,"~/.gitignore"
-'6  3  0  ~/.gitignore
-|4,54,3,0,1749578764,"~/.gitignore"
-'7  2  0  ~/.gitignore
-|4,55,2,0,1749578764,"~/.gitignore"
+'0  3  9  ~/README.md
+|4,48,3,9,1749580612,"~/README.md"
+'1  2  0  ~/README.md
+|4,49,2,0,1749580587,"~/README.md"
+'2  52  0  ~/README.md
+|4,50,52,0,1749580587,"~/README.md"
+'3  1  0  ~/README
+|4,51,1,0,1749580566,"~/README"
+'4  1  0  ~/.gitignore
+|4,52,1,0,1749579000,"~/.gitignore"
+'5  1  39  ~/.gitignore
+|4,53,1,39,1749578943,"~/.gitignore"
+'6  1  0  ~/.gitignore
+|4,54,1,0,1749578928,"~/.gitignore"
+'7  1  0  ~/.gitignore
+|4,55,1,0,1749578928,"~/.gitignore"
 '8  3  0  ~/.gitignore
-|4,56,3,0,1749578764,"~/.gitignore"
-'9  2  0  ~/.gitignore
-|4,57,2,0,1749578764,"~/.gitignore"
+|4,56,3,0,1749578928,"~/.gitignore"
+'9  3  0  ~/.gitignore
+|4,57,3,0,1749578928,"~/.gitignore"
 
 # Jumplist (newest first):
+-'  3  9  ~/README.md
+|4,39,3,9,1749580612,"~/README.md"
+-'  1  0  ~/README.md
+|4,39,1,0,1749580595,"~/README.md"
+-'  2  0  ~/README.md
+|4,39,2,0,1749580589,"~/README.md"
+-'  52  0  ~/README.md
+|4,39,52,0,1749580587,"~/README.md"
+-'  1  0  ~/README
+|4,39,1,0,1749580566,"~/README"
+-'  1  0  ~/README
+|4,39,1,0,1749580566,"~/README"
+-'  1  0  ~/README
+|4,39,1,0,1749580566,"~/README"
+-'  1  0  ~/README
+|4,39,1,0,1749580566,"~/README"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749579000,"~/.gitignore"
 -'  1  0  ~/.gitignore
 |4,39,1,0,1749579000,"~/.gitignore"
 -'  1  39  ~/.gitignore
 |4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
+-'  1  39  ~/.gitignore
+|4,39,1,39,1749578943,"~/.gitignore"
 -'  3  0  ~/.gitignore
 |4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578933,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578928,"~/.gitignore"
 -'  3  0  ~/.gitignore
 |4,39,3,0,1749578928,"~/.gitignore"
 -'  3  0  ~/.gitignore
@@ -137,6 +260,90 @@
 |4,39,11,0,1749578904,"~/.gitignore"
 -'  11  0  ~/.gitignore
 |4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  3  0  ~/.gitignore
+|4,39,3,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  11  0  ~/.gitignore
+|4,39,11,0,1749578904,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  2  0  ~/.gitignore
+|4,39,2,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
+-'  10  0  ~/.gitignore
+|4,39,10,0,1749578764,"~/.gitignore"
 -'  2  0  ~/.gitignore
 |4,39,2,0,1749578764,"~/.gitignore"
 -'  10  0  ~/.gitignore
@@ -151,180 +358,48 @@
 |4,39,8,0,1749578753,"~/.gitignore"
 -'  7  0  ~/.gitignore
 |4,39,7,0,1749578753,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749578732,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749578732,"~/.gitignore"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  7  0  ~/.ssh/id_ed25519
-|4,39,7,0,1749578428,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  1  0  ~/.ssh/id_ed25519
-|4,39,1,0,1749578424,"~/.ssh/id_ed25519"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  41  0  ~/foo.py
-|4,39,41,0,1749578085,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
--'  1  0  ~/foo.py
-|4,39,1,0,1749578081,"~/foo.py"
+-'  8  0  ~/.gitignore
+|4,39,8,0,1749578753,"~/.gitignore"
+-'  7  0  ~/.gitignore
+|4,39,7,0,1749578753,"~/.gitignore"
+-'  8  0  ~/.gitignore
+|4,39,8,0,1749578753,"~/.gitignore"
+-'  7  0  ~/.gitignore
+|4,39,7,0,1749578753,"~/.gitignore"
+-'  8  0  ~/.gitignore
+|4,39,8,0,1749578753,"~/.gitignore"
+-'  7  0  ~/.gitignore
+|4,39,7,0,1749578753,"~/.gitignore"
+-'  8  0  ~/.gitignore
+|4,39,8,0,1749578753,"~/.gitignore"
+-'  7  0  ~/.gitignore
+|4,39,7,0,1749578753,"~/.gitignore"
 
 # History of marks within files (newest to oldest):
+
+> ~/README.md
+	*	1749580609	0
+	"	3	9
+	^	3	10
+	.	3	9
+	+	1	57
+	+	2	26
+	+	2	0
+	+	2	62
+	+	2	0
+	+	2	59
+	+	2	0
+	+	2	9
+	+	2	0
+	+	2	123
+	+	2	47
+	+	2	0
+	+	1	46
+	+	3	9
+
+> ~/README
+	*	1749580564	0
+	"	1	0
 
 > ~/.gitignore
 	*	1749578999	0
@@ -458,26 +533,6 @@
 	+	22	0
 	+	21	50
 
-> ~/README.md
-	*	1749524263	0
-	"	52	0
-	.	54	0
-	+	1	57
-	+	2	26
-	+	2	0
-	+	12	62
-	+	2	0
-	+	24	0
-	+	54	59
-	+	28	0
-	+	54	0
-	+	34	0
-	+	42	9
-	+	52	0
-	+	53	123
-	+	54	47
-	+	54	0
-
 > ~/i1.sh
 	*	1749522215	0
 	"	19	0
@@ -528,10 +583,6 @@
 	+	44	0
 	+	43	0
 	+	44	13
-
-> ~/README
-	*	1749519894	0
-	"	1	0
 
 > ~/RE
 	*	1749519891	0
