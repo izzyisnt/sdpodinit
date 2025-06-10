@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "🧩 Starting full SurfDock environment install..."
+
+# ───── System Dependencies ───────────────────────────────────────────────
+echo "📦 Installing system packages..."
+apt-get update
+apt-get install -y \
+  python3.10-dev \
+  swig \
+  build-essential \
+  git \
+  openbabel
+
+# ───── Core Scientific Stack ─────────────────────────────────────────────
+echo "📦 Installing core scientific Python packages..."
+pip install \
+  numpy==1.24.4 \
+  scipy==1.8.1 \
+  pandas==2.1.2 \
+  scikit-learn==1.3.2
+
+# ───── Chemistry & Docking Stack ────────────────────────────────────────
+echo "🧪 Installing docking and chemistry libraries..."
+pip install \
+  rdkit-pypi==2022.9.5 \
+  openmm==8.2.0 \
+  biopython==1.79 \
+  babel==2.13.1 \
+  biopandas==0.4.1
+
+# Install ProDy from GitHub (latest master)
+pip install git+https://github.com/prody/ProDy.git
+
+# Install PDBFixer from GitHub (latest master)
+pip install git+https://github.com/openmm/pdbfixer.git@master
+
+# ───── ML Utilities ─────────────────────────────────────────────────────
+echo "🧠 Installing ML utilities..."
+pip install \
+  torchmetrics==1.2.1 \
+  torch-ema==0.3 \
+  accelerate==0.15.0 \
+  wandb==0.16.1
+
+# ───── PyTorch Geometric (with CUDA 12.1) ───────────────────────────────
+echo "🔗 Installing PyTorch Geometric packages (torch==2.5.1+cu121)..."
+pip install \
+  e3nn==0.5.1 \
+  pyg_lib \
+  torch_scatter \
+  torch_sparse \
+  torch_cluster \
+  torch_spline_conv \
+  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html
+
+# ───── Mesh and Geometry Tools ──────────────────────────────────────────
+echo "📐 Installing mesh/geometry processing tools..."
+pip install \
+  trimesh \
+  pymeshfix \
+  plyfile
+
+# Install PyMesh2 from prebuilt wheel
+pip install https://github.com/nuvolos-cloud/PyMesh/releases/download/v0.3.1/pymesh2-0.3.1-cp310-cp310-linux_x86_64.whl
+
+# ───── Utility & NLP Packages ───────────────────────────────────────────
+echo "🛠️  Installing utility + transformer packages..."
+pip install \
+  loguru \
+  prefetch_generator \
+  dimorphite_dl \
+  huggingface-hub==0.17.3 \
+  tokenizers==0.13.3 \
+  transformers==4.29.2
+
+# ───── Optional but Required by SurfDock if ESM is used ────────────────
+echo "🧬 Installing ESM model from Facebook..."
+pip install git+https://github.com/facebookresearch/esm.git
+
+# ───── Completion ───────────────────────────────────────────────────────
+echo "✅ SurfDock environment install complete."
+

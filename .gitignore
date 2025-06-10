@@ -1,0 +1,16 @@
+
+# Bytecode and metadata
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Pip + wheel
+*.whl
+
+# Avoid secrets or keys
+*.key
+*.pem
+
+.cache/

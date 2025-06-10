@@ -1,0 +1,44 @@
+#!/bin/bash
+
+echo "🔍 Checking /etc/ssh/sshd_config for required settings..."
+
+# Required lines
+declare -A required_settings=(
+  ["PasswordAuthentication"]="no"
+  ["PermitRootLogin"]="yes"
+  ["AuthorizedKeysFile"]="%h/.ssh/authorized_keys"
+)
+
+fix_needed=false
+
+for key in "${!required_settings[@]}"; do
+  expected_value="${required_settings[$key]}"
+  actual_line=$(grep -E "^\s*${key}" /etc/ssh/sshd_config | grep -v '^#')
+
+  if echo "$actual_line" | grep -q "$expected_value"; then
+    echo -e "✅ Found: \e[32m$key $expected_value\e[0m"
+  elif [ -n "$actual_line" ]; then
+    echo -e "⚠️  Found: \e[33m$actual_line\e[0m — expected: \e[33m$key $expected_value\e[0m"
+    fix_needed=true
+  else
+    echo -e "❌ Missing: \e[31m$key $expected_value\e[0m"
+    fix_needed=true
+  fi
+done
+
+# Offer auto-fix
+if $fix_needed; then
+  echo -e "\n🔧 Fixing /etc/ssh/sshd_config..."
+  sed -i -E \
+    -e 's|^#?\s*PasswordAuthentication\s+.*|PasswordAuthentication no|' \
+    -e 's|^#?\s*PermitRootLogin\s+.*|PermitRootLogin yes|' \
+    -e 's|^#?\s*AuthorizedKeysFile\s+.*|AuthorizedKeysFile %h/.ssh/authorized_keys|' \
+    /etc/ssh/sshd_config
+
+  echo -e "✅ \e[32mConfig updated. Now restart sshd:\e[0m"
+  echo -e "   \e[36mkill -HUP 1\e[0m   # if running with PID 1"
+  echo -e "   \e[36m/usr/sbin/sshd -D &\e[0m   # if restarting manually"
+else
+  echo -e "\n🎉 \e[32mAll sshd settings are correct.\e[0m"
+fi
+
