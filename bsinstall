@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TOOLS_TARBALL="./SurfDock/comp_surface/tools/APBS_PDB2PQR.tar.gz"
+EXTRACT_DIR="/tmp/apbs_pdb2pqr_extracted"
+INSTALL_BASE="/usr/local"
+BIN_DIR="/usr/local/bin"
+
+echo "🔍 Validating source tarball..."
+[[ -f "$TOOLS_TARBALL" ]] || { echo "❌ Missing tarball: $TOOLS_TARBALL"; exit 1; }
+
+echo "📦 Extracting tools..."
+rm -rf "$EXTRACT_DIR"
+mkdir -p "$EXTRACT_DIR"
+tar -xzf "$TOOLS_TARBALL" -C "$EXTRACT_DIR"
+
+# Find and install a binary
+install_bin() {
+    local name=$1
+    local pattern=$2
+    local install_dir="$INSTALL_BASE/$name"
+
+    local binary
+    binary=$(find "$EXTRACT_DIR" -type f -name "$pattern" -perm -u+x | head -n 1 || true)
+
+    if [[ -z "$binary" ]]; then
+        echo "❌ $name not found"
+        return 1
+    fi
+
+    echo "📁 Installing $name to $install_dir"
+    rm -rf "$install_dir"
+    mkdir -p "$install_dir"
+    cp "$binary" "$install_dir/$name"
+    chmod +x "$install_dir/$name"
+    ln -sf "$install_dir/$name" "$BIN_DIR/$name"
+    echo "✅ Linked: $name → $BIN_DIR/$name"
+}
+
+# Extract and install msms
+install_msms() {
+    local tarball
+    tarball=$(find "$EXTRACT_DIR" -type f -name "MSMS_i86_64Linux2.2.6.1.tar.gz" | head -n 1 || true)
+
+    if [[ -z "$tarball" ]]; then
+        echo "❌ msms tarball not found"
+        return 1
+    fi
+
+    local install_dir="$INSTALL_BASE/msms"
+    echo "📦 Extracting msms tarball to $install_dir"
+    rm -rf "$install_dir"
+    mkdir -p "$install_dir"
+    tar -xzf "$tarball" -C "$install_dir"
+
+    local msms_bin="$install_dir/msms"
+    if [[ ! -x "$msms_bin" ]]; then
+        echo "❌ msms binary not found after extract"
+        return 1
+    fi
+
+    chmod +x "$msms_bin"
+    ln -sf "$msms_bin" "$BIN_DIR/msms"
+    echo "✅ Linked: msms → $BIN_DIR/msms"
+}
+
+validate_bin() {
+    local name=$1
+    echo -n "🧪 Validating $name... "
+    if command -v "$name" >/dev/null; then
+        "$name" --help >/dev/null 2>&1 || "$name" -h >/dev/null 2>&1 || true
+        echo "✅ OK"
+    else
+        echo "❌ Not in PATH"
+    fi
+}
+
+install_bin apbs apbs
+install_bin pdb2pqr pdb2pqr
+install_bin multivalue multivalue
+install_msms
+
+for tool in apbs pdb2pqr multivalue msms; do
+    validate_bin "$tool"
+done
+
+echo "🧼 Cleaning up..."
+rm -rf "$EXTRACT_DIR"
+echo "🎉 Done!"
+

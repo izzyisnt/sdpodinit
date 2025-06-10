@@ -1,0 +1,5 @@
+# HSTS 1.0 Known Hosts database for GNU Wget.
+# Edit at your own risk.
+# <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
+pubchem.ncbi.nlm.nih.gov	0	1	1749592852	31536000
+files.rcsb.org	0	1	1749594268	16000000

@@ -1,0 +1,28 @@
+read
+  mol pqr input.pqr
+end
+
+elec
+  mg-auto
+  dime 65 65 65
+  cglen 80.0 80.0 80.0
+  fglen 40.0 40.0 40.0
+  cgcent mol 1
+  fgcent mol 1
+  mol 1
+  lpbe
+  bcfl sdh
+  pdie 2.0
+  sdie 78.5
+  srad 1.4
+  swin 0.3
+  srfm smol
+  chgm spl2
+  sdens 0.030  # ← this line was missing
+  temp 298.15
+  calcenergy total
+  calcforce no
+end
+
+quit
+

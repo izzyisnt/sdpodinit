@@ -1,0 +1,71 @@
+#!/bin/bash
+set -e
+
+PDB_FILE="$1"
+BASENAME=$(basename "$PDB_FILE" .pdb)
+
+if [[ -z "$PDB_FILE" || ! -f "$PDB_FILE" ]]; then
+  echo "❌ Usage: $0 <your_structure.pdb>"
+  exit 1
+fi
+
+echo "📦 Converting $PDB_FILE to PQR..."
+pdb2pqr --ff=parse "$PDB_FILE" "${BASENAME}.pqr"
+
+echo "📝 Generating APBS input file..."
+cat > apbs_input.in <<EOF
+read
+  mol pqr ${BASENAME}.pqr
+end
+
+elec
+  mg-auto
+  dime 65 65 65
+  cglen 80.0 80.0 80.0
+  fglen 40.0 40.0 40.0
+  cgcent mol 1
+  fgcent mol 1
+  mol 1
+  lpbe
+  bcfl sdh
+  pdie 2.0
+  sdie 78.5
+  srad 1.4
+  swin 0.3
+  srfm smol
+  chgm spl2
+  sdens 0.030
+  temp 298.15
+  calcenergy total
+  calcforce no
+end
+
+quit
+EOF
+
+echo "⚡ Running APBS..."
+apbs apbs_input.in
+
+echo "✅ APBS finished. DX output (electrostatics grid) generated."
+
+if [[ -f "${BASENAME}.pqr" && -f "apbs_input.in" && -f *.dx ]]; then
+  echo "📈 Optional: Sample DX grid using multivalue? (y/n)"
+  read -r DO_SAMPLE
+
+  if [[ "$DO_SAMPLE" == "y" || "$DO_SAMPLE" == "Y" ]]; then
+    echo "🔢 Enter CSV with XYZ coordinates to sample (e.g., ligand_centroids.csv):"
+    read -r CSV_FILE
+    if [[ ! -f "$CSV_FILE" ]]; then
+      echo "❌ File '$CSV_FILE' not found. Exiting sampling."
+      exit 1
+    fi
+
+    DX_FILE=$(ls *.dx | head -n 1)
+    OUTPUT_FILE="${BASENAME}_sampled.csv"
+
+    echo "📍 Sampling electrostatics from $DX_FILE at points in $CSV_FILE..."
+    multivalue "$CSV_FILE" "$DX_FILE" "$OUTPUT_FILE"
+    echo "✅ Sampled values written to $OUTPUT_FILE"
+  fi
+fi
+
