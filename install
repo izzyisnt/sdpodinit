@@ -5,6 +5,40 @@ echo "🧩 Starting parallel SurfDock environment install..."
 export PIP_DISABLE_PIP_VERSION_CHECK=1
 export PYTHONWARNINGS="ignore"
 
+echo "📦 Installing and configuring locale..."
+
+# Install locale support
+apt-get update
+apt-get install -y locales
+
+# Generate en_US.UTF-8 locale
+locale-gen en_US.UTF-8
+
+# Persist locale settings system-wide
+update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+# Apply locale immediately for current session
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Confirm
+echo "✅ Locale configured:"
+locale
+
+
+if [ -d "SurfDock/.git" ]; then
+    echo "📁 SurfDock already cloned, pulling latest changes..."
+    cd SurfDock && git pull && cd ..
+else
+    echo "📦 Cloning SurfDock..."
+    git clone https://github.com/CAODH/SurfDock.git
+fi
+
+
+# misc
+pip install ipython
+
+
 
 # ───── System Dependencies ───────────────────────────────────────────────
 echo "📦 Installing system packages..."

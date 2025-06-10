@@ -5,23 +5,29 @@
 |1,4
 
 # Value of 'encoding' when this file was written
-*encoding=latin1
+*encoding=utf-8
 
 
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/Hug
+~MSle0~/pqr
 
 # Command Line History (newest to oldest):
 :x
-|2,0,1749580612,,"x"
+|2,0,1749589224,,"x"
 :q
-|2,0,1749580587,,"q"
+|2,0,1749588361,,"q"
 :q!
 |2,0,1749523874,,"q!"
 
 # Search String History (newest to oldest):
+?/pqr
+|2,1,1749585243,47,"pqr"
+?/basename
+|2,1,1749585107,47,"basename"
+?/parser.par
+|2,1,1749583447,47,"parser.par"
 ?/Hug
 |2,1,1749578939,47,"Hug"
 ?/openmm
@@ -67,321 +73,280 @@
 
 # Registers:
 "0	LINE	0
-	    "pymeshfix": None,
-|3,0,0,1,1,0,1749572448,"    \"pymeshfix\": None,"
-""1	LINE	0
-	prody apt-get update && apt-get install -y python3.10-dev
+	echo "📦 Cloning SurfDock..."
+|3,0,0,1,1,0,1749582168,"echo \"📦 Cloning SurfDock...\""
+"1	LINE	0
 	
-	pip install \
-	  torchmetrics==1.2.1 \
-	  torch-ema==0.3 \
-	  e3nn==0.5.1 \
-	  pyg_lib \
-	  torch_scatter \
-	  torch_sparse \
-	  torch_cluster \
-	  torch_spline_conv \
-	  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html
-	
-	pip install \
-	  torchmetrics==1.2.1 \
-	  torch-ema==0.3 \
-	  e3nn==0.5.1 \
-	  pyg_lib \
-	  torch_scatter \
-	  torch_sparse \
-	  torch_cluster \
-	  torch_spline_conv \
-	  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html
-	
-	pip install \
-	  rdkit-pypi==2022.9.5 \
-	  openmm==8.1.1 \
-	  biopython==1.79 \
-	  prody==2.4.0 \
-	  babel==2.13.1 \
-	  biopandas==0.4.1 \
-	  openbabel==3.1.1.1
-	
-	
-	pip install git+https://github.com/openmm/pdbfixer.git@v1.9
-	
-	pip install \
-	  trimesh \
-	  pymeshfix \
-	  plyfile \
-	  matplotlib \
-	  pyvista
-	
-	
-	pip install \
-	  loguru \
-	  prefetch_generator \
-	  dimorphite_dl \
-	  huggingface-hub==0.17.3 \
-	  tokenizers==0.13.3 \
-|3,1,1,1,50,0,1749580595,"prody apt-get update && apt-get install -y python3.10-dev","","pip install \\","  torchmetrics==1.2.1 \\","  torch-ema==0.3 \\","  e3nn==0.5.1 \\","  pyg_lib \\","  torch_scatter \\","  torch_sparse \\","  torch_cluster \\","  torch_spline_conv \\","  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html","","pip install \\","  torchmetrics==1.2.1 \\","  torch-ema==0.3 \\","  e3nn==0.5.1 \\","  pyg_lib \\","  torch_scatter \\",>19
-|<"  torch_sparse \\","  torch_cluster \\","  torch_spline_conv \\","  --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html","","pip install \\","  rdkit-pypi==2022.9.5 \\","  openmm==8.1.1 \\","  biopython==1.79 \\","  prody==2.4.0 \\","  babel==2.13.1 \\","  biopandas==0.4.1 \\","  openbabel==3.1.1.1","","","pip install git+https://github.com/openmm/pdbfixer.git@v1.9","","pip install \\","  trimesh \\","  pymeshfix \\","  plyfile \\","  matplotlib \\","  pyvista","","",>16
-|<"pip install \\","  loguru \\","  prefetch_generator \\","  dimorphite_dl \\","  huggingface-hub==0.17.3 \\","  tokenizers==0.13.3 \\"
+|3,0,1,1,1,0,1749589128,""
 "2	LINE	0
-	#.viminfo
-|3,0,2,1,1,0,1749578999,"#.viminfo"
+	
+	That output confirms:
+	
+	✅ Your PyMesh workaround (renaming libstdc++.so.6) worked — no GLIBC error
+	✅ computeTargetMesh_test_samples.py ran to completion
+	✅ It processed the sample 1a0q without crashing
+	✅ RDKit warned about a 2D/3D flag mismatch (non-fatal, expected)
+	✅ You are now fully SurfDock-prepped in this pod
+	
+	
+	
+|3,0,2,1,11,0,1749589127,"","That output confirms:","","✅ Your PyMesh workaround (renaming libstdc++.so.6) worked — no GLIBC error","✅ computeTargetMesh_test_samples.py ran to completion","✅ It processed the sample 1a0q without crashing","✅ RDKit warned about a 2D/3D flag mismatch (non-fatal, expected)","✅ You are now fully SurfDock-prepped in this pod","","",""
 "3	LINE	0
-	.python_history
-|3,0,3,1,1,0,1749578997,".python_history"
+	💥 Boom — Success! 💥
+|3,0,3,1,1,0,1749589126,"💥 Boom — Success! 💥"
 "4	LINE	0
-	#.profile
-|3,0,4,1,1,0,1749578994,"#.profile"
+	
+|3,0,4,1,1,0,1749589126,""
 "5	LINE	0
-	#.bash*
-|3,0,5,1,1,0,1749578993,"#.bash*"
+	python computeTargetMesh_test_samples.py --data_dir /root/SurfDock/data/eval_sample_dirs/test_samples
+|3,0,5,1,1,0,1749589126,"python computeTargetMesh_test_samples.py --data_dir /root/SurfDock/data/eval_sample_dirs/test_samples"
 "6	LINE	0
-	#.ssh/
-|3,0,6,1,1,0,1749578993,"#.ssh/"
+	
+|3,0,6,1,1,0,1749589125,""
 "7	LINE	0
-	!.cache/pip/
-|3,0,7,1,1,0,1749578989,"!.cache/pip/"
+	    args.data_dir = os.path.expanduser(args.data_dir)
+|3,0,7,1,1,0,1749589125,"    args.data_dir = os.path.expanduser(args.data_dir)"
 "8	LINE	0
-	.cache/*
-|3,0,8,1,1,0,1749578989,".cache/*"
+	   args = parser.parse_args()
+|3,0,8,1,1,0,1749589125,"   args = parser.parse_args()"
 "9	LINE	0
-	# Ignore everything in .cache except pip
-|3,0,9,1,1,0,1749578988,"# Ignore everything in .cache except pip"
-"-	CHAR	0
-	HuggingFace
-|3,0,36,0,1,0,1749578941,"HuggingFace"
+	computeTargetMesh_test_samples.py
+|3,0,9,1,1,0,1749589124,"computeTargetMesh_test_samples.py"
+""-	CHAR	0
+	s
+|3,1,36,0,1,0,1749589221,"s"
 
 # File marks:
-'0  3  9  ~/README.md
-|4,48,3,9,1749580612,"~/README.md"
-'1  2  0  ~/README.md
-|4,49,2,0,1749580587,"~/README.md"
-'2  52  0  ~/README.md
-|4,50,52,0,1749580587,"~/README.md"
-'3  1  0  ~/README
-|4,51,1,0,1749580566,"~/README"
-'4  1  0  ~/.gitignore
-|4,52,1,0,1749579000,"~/.gitignore"
-'5  1  39  ~/.gitignore
-|4,53,1,39,1749578943,"~/.gitignore"
-'6  1  0  ~/.gitignore
-|4,54,1,0,1749578928,"~/.gitignore"
-'7  1  0  ~/.gitignore
-|4,55,1,0,1749578928,"~/.gitignore"
-'8  3  0  ~/.gitignore
-|4,56,3,0,1749578928,"~/.gitignore"
-'9  3  0  ~/.gitignore
-|4,57,3,0,1749578928,"~/.gitignore"
+'0  6  18  ~/README.md
+|4,48,6,18,1749589224,"~/README.md"
+'1  4  0  ~/README.md
+|4,49,4,0,1749589190,"~/README.md"
+'2  4  0  ~/README.md
+|4,50,4,0,1749589190,"~/README.md"
+'3  7  0  ~/README.md
+|4,51,7,0,1749589135,"~/README.md"
+'4  7  0  ~/README.md
+|4,52,7,0,1749589135,"~/README.md"
+'5  7  0  ~/README.md
+|4,53,7,0,1749589135,"~/README.md"
+'6  7  0  ~/README.md
+|4,54,7,0,1749589135,"~/README.md"
+'7  3  0  ~/test_global_vars.py
+|4,55,3,0,1749589062,"~/test_global_vars.py"
+'8  1  0  ~/test_global_vars.py
+|4,56,1,0,1749589021,"~/test_global_vars.py"
+'9  20  0  ~/set_global_vars.py
+|4,57,20,0,1749588892,"~/set_global_vars.py"
 
 # Jumplist (newest first):
--'  3  9  ~/README.md
-|4,39,3,9,1749580612,"~/README.md"
--'  1  0  ~/README.md
-|4,39,1,0,1749580595,"~/README.md"
--'  2  0  ~/README.md
-|4,39,2,0,1749580589,"~/README.md"
--'  52  0  ~/README.md
-|4,39,52,0,1749580587,"~/README.md"
--'  1  0  ~/README
-|4,39,1,0,1749580566,"~/README"
--'  1  0  ~/README
-|4,39,1,0,1749580566,"~/README"
--'  1  0  ~/README
-|4,39,1,0,1749580566,"~/README"
--'  1  0  ~/README
-|4,39,1,0,1749580566,"~/README"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  0  ~/.gitignore
-|4,39,1,0,1749579000,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  1  39  ~/.gitignore
-|4,39,1,39,1749578943,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578933,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578928,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  3  0  ~/.gitignore
-|4,39,3,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  11  0  ~/.gitignore
-|4,39,11,0,1749578904,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  2  0  ~/.gitignore
-|4,39,2,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  10  0  ~/.gitignore
-|4,39,10,0,1749578764,"~/.gitignore"
--'  8  0  ~/.gitignore
-|4,39,8,0,1749578753,"~/.gitignore"
--'  7  0  ~/.gitignore
-|4,39,7,0,1749578753,"~/.gitignore"
--'  8  0  ~/.gitignore
-|4,39,8,0,1749578753,"~/.gitignore"
--'  7  0  ~/.gitignore
-|4,39,7,0,1749578753,"~/.gitignore"
--'  8  0  ~/.gitignore
-|4,39,8,0,1749578753,"~/.gitignore"
--'  7  0  ~/.gitignore
-|4,39,7,0,1749578753,"~/.gitignore"
--'  8  0  ~/.gitignore
-|4,39,8,0,1749578753,"~/.gitignore"
--'  7  0  ~/.gitignore
-|4,39,7,0,1749578753,"~/.gitignore"
--'  8  0  ~/.gitignore
-|4,39,8,0,1749578753,"~/.gitignore"
--'  7  0  ~/.gitignore
-|4,39,7,0,1749578753,"~/.gitignore"
--'  8  0  ~/.gitignore
-|4,39,8,0,1749578753,"~/.gitignore"
--'  7  0  ~/.gitignore
-|4,39,7,0,1749578753,"~/.gitignore"
+-'  6  18  ~/README.md
+|4,39,6,18,1749589224,"~/README.md"
+-'  4  0  ~/README.md
+|4,39,4,0,1749589214,"~/README.md"
+-'  4  0  ~/README.md
+|4,39,4,0,1749589190,"~/README.md"
+-'  7  0  ~/README.md
+|4,39,7,0,1749589159,"~/README.md"
+-'  7  0  ~/README.md
+|4,39,7,0,1749589159,"~/README.md"
+-'  7  0  ~/README.md
+|4,39,7,0,1749589135,"~/README.md"
+-'  8  0  ~/README.md
+|4,39,8,0,1749589127,"~/README.md"
+-'  8  0  ~/README.md
+|4,39,8,0,1749589127,"~/README.md"
+-'  8  0  ~/README.md
+|4,39,8,0,1749589127,"~/README.md"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  3  0  ~/test_global_vars.py
+|4,39,3,0,1749589062,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  1  0  ~/test_global_vars.py
+|4,39,1,0,1749589021,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  31  0  ~/test_global_vars.py
+|4,39,31,0,1749589009,"~/test_global_vars.py"
+-'  28  0  ~/test_global_vars.py
+|4,39,28,0,1749589009,"~/test_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  20  0  ~/set_global_vars.py
+|4,39,20,0,1749588892,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
+-'  1  0  ~/set_global_vars.py
+|4,39,1,0,1749588888,"~/set_global_vars.py"
 
 # History of marks within files (newest to oldest):
 
 > ~/README.md
-	*	1749580609	0
-	"	3	9
-	^	3	10
-	.	3	9
+	*	1749589222	0
+	"	6	18
+	^	6	19
+	.	6	18
 	+	1	57
 	+	2	26
 	+	2	0
@@ -396,6 +361,165 @@
 	+	2	0
 	+	1	46
 	+	3	9
+	+	8	56
+	+	8	0
+	+	8	53
+	+	8	32
+	+	8	84
+	+	8	0
+	+	8	101
+	+	8	49
+	+	8	0
+	+	6	59
+	+	8	0
+	+	6	18
+
+> ~/test_global_vars.py
+	*	1749589060	0
+	"	3	0
+	.	3	0
+	+	32	23
+	+	3	0
+	+	4	0
+	+	2	88
+	+	3	0
+
+> ~/set_global_vars.py
+	*	1749588890	0
+	"	20	0
+	^	23	0
+	.	22	8
+	+	22	8
+
+> ~/SurfDock/comp_surface/prepare_target/default_config/test_global_vars.py
+	*	1749588694	0
+	"	26	0
+	^	29	0
+	.	28	23
+	+	28	23
+
+> ~/SurfDock/comp_surface/prepare_target/default_config/global_vars.py
+	*	1749588603	0
+	"	19	4
+	.	23	0
+	+	1	24
+	+	22	8
+	+	23	0
+
+> ~/comp_surface/prepare_target/default_config/global_vars.py
+	*	1749588358	0
+	"	1	0
+
+> ~/SurfDock/comp_surface/prepare_target/testmeshgen.py
+	*	1749586283	0
+	"	8	31
+	^	11	55
+	.	11	54
+	+	2	0
+	+	11	54
+
+> ~/SurfDock/comp_surface/prepare_target/foo.py
+	*	1749585877	0
+	"	17	0
+	^	19	72
+	.	19	71
+	+	19	71
+
+> ~/SurfDock/comp_surface/prepare_target/computeAPBS.py
+	*	1749585758	0
+	"	67	0
+	^	70	0
+	.	69	18
+	+	2	0
+	+	2	3
+	+	2	0
+	+	69	18
+
+> ~/SurfDock/comp_surface/prepare_target/computeTargetMesh_test_samples.py
+	*	1749583450	0
+	"	237	4
+	.	237	0
+	+	236	53
+	+	237	0
+
+> ~/SurfDock/comp_surface/prepare_target/README
+	*	1749583238	0
+	"	1	0
+
+> ~/validate
+	*	1749583169	0
+	"	29	4
+	^	149	0
+	.	148	109
+	+	2	0
+	+	2	21
+	+	2	2
+	+	2	0
+	+	2	21
+	+	2	0
+	+	2	26
+	+	2	0
+	+	2	20
+	+	2	32
+	+	2	11
+	+	2	0
+	+	2	15
+	+	2	48
+	+	2	0
+	+	2	47
+	+	2	52
+	+	2	0
+	+	2	20
+	+	2	0
+	+	2	9
+	+	2	0
+	+	2	53
+	+	2	0
+	+	148	109
+
+> ~/install
+	*	1749583150	0
+	"	38	5
+	^	38	6
+	.	38	5
+	+	2	0
+	+	2	94
+	+	2	0
+	+	1	2
+	+	2	16
+	+	2	118
+	+	2	2
+	+	2	0
+	+	2	2
+	+	2	34
+	+	2	0
+	+	150	62
+	+	6	30
+	+	72	0
+	+	74	65
+	+	76	0
+	+	71	0
+	+	72	0
+	+	75	33
+	+	76	0
+	+	84	0
+	+	42	9
+	+	42	26
+	+	28	0
+	+	8	0
+	+	8	16
+	+	26	6
+	+	42	0
+	+	35	2
+	+	39	19
+	+	38	5
+
+> ~/.bashrc
+	*	1749581246	0
+	"	99	2
+	^	101	4
+	.	101	3
+	+	101	3
 
 > ~/README
 	*	1749580564	0
@@ -427,69 +551,12 @@
 	+	2	0
 	+	43	2
 
-> ~/validate
-	*	1749577874	0
-	"	145	0
-	^	149	0
-	.	148	109
-	+	2	0
-	+	2	21
-	+	2	2
-	+	2	0
-	+	2	21
-	+	2	0
-	+	2	26
-	+	2	0
-	+	2	20
-	+	2	32
-	+	2	11
-	+	2	0
-	+	2	15
-	+	2	48
-	+	2	0
-	+	2	47
-	+	2	52
-	+	2	0
-	+	2	20
-	+	2	0
-	+	2	9
-	+	2	0
-	+	2	53
-	+	2	0
-	+	148	109
-
 > ~/.ssh/authorized_hosts
 	*	1749577435	0
 	"	1	86
 	^	1	87
 	.	1	86
 	+	1	86
-
-> ~/install
-	*	1749577072	0
-	"	49	4
-	.	50	0
-	+	2	0
-	+	2	94
-	+	2	0
-	+	1	2
-	+	2	16
-	+	2	118
-	+	2	2
-	+	2	0
-	+	2	2
-	+	2	34
-	+	2	0
-	+	116	62
-	+	6	30
-	+	38	0
-	+	40	65
-	+	42	0
-	+	37	0
-	+	38	0
-	+	41	33
-	+	42	0
-	+	50	0
 
 > ~/foovad
 	*	1749526675	0
