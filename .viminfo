@@ -15,7 +15,7 @@
 
 # Command Line History (newest to oldest):
 :x
-|2,0,1749594562,,"x"
+|2,0,1749597008,,"x"
 :X
 |2,0,1749594163,,"X"
 :q
@@ -80,6 +80,9 @@
 	echo "📦 Cloning SurfDock..."
 |3,0,0,1,1,0,1749582168,"echo \"📦 Cloning SurfDock...\""
 ""1	LINE	0
+	1.630000e+01,3.130000e+01,5.100000e+00,1.714419e+00
+|3,1,1,1,1,0,1749597005,"1.630000e+01,3.130000e+01,5.100000e+00,1.714419e+00"
+"2	LINE	0
 	#!/usr/bin/env bash
 	set -e
 	
@@ -130,10 +133,10 @@
 	  srfm smol
 	  chgm spl2
 	  sdens 0.030
-|3,1,1,1,50,0,1749594160,"#!/usr/bin/env bash","set -e","","PDB_ID=\"$1\"","LIG_RES=\"$2\"   # three‐letter residue name in the PDB","if [[ -z \"$PDB_ID\" || -z \"$LIG_RES\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <LIG_RESNAME>\"","  exit 1","fi","","# clean slate","WORK=\"apbs_run\"","rm -rf \"$WORK\" && mkdir \"$WORK\"","cd \"$WORK\"","","# 1) Download PDB","echo \"⬇️ Downloading PDB ${PDB_ID}…\"",>80
+|3,0,2,1,50,0,1749594160,"#!/usr/bin/env bash","set -e","","PDB_ID=\"$1\"","LIG_RES=\"$2\"   # three‐letter residue name in the PDB","if [[ -z \"$PDB_ID\" || -z \"$LIG_RES\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <LIG_RESNAME>\"","  exit 1","fi","","# clean slate","WORK=\"apbs_run\"","rm -rf \"$WORK\" && mkdir \"$WORK\"","cd \"$WORK\"","","# 1) Download PDB","echo \"⬇️ Downloading PDB ${PDB_ID}…\"",>80
 |<"wget -q \"https://files.rcsb.org/download/${PDB_ID}.pdb\" -O \"${PDB_ID}.pdb\"","","# 2) Extract ligand coords from that PDB","echo \"🧠 Extracting ligand coords for residue ${LIG_RES}…\"","python3 ../extract_ligand_from_pdb.py \"${PDB_ID}.pdb\" \"${LIG_RES}\"","","# 3) Convert PDB → PQR","echo \"⚗️ Converting to PQR…\"","pdb2pqr --ff=parse \"${PDB_ID}.pdb\" \"${PDB_ID}.pqr\"","","# 4) Write APBS input, asking it to write a single .dx","cat > apbs_input.in <<EOF","read",>25
 |<"  mol pqr ${PDB_ID}.pqr","end","","elec","  mg-auto","  dime 65 65 65","  cglen 80.0 80.0 80.0","  fglen 40.0 40.0 40.0","  cgcent mol 1","  fgcent mol 1","  mol 1","  lpbe","  bcfl sdh","  pdie 2.0","  sdie 78.5","  srad 1.4","  swin 0.3","  srfm smol","  chgm spl2","  sdens 0.030"
-"2	LINE	0
+"3	LINE	0
 	#!/usr/bin/env python3
 	import sys
 	from Bio.PDB import PDBParser
@@ -159,9 +162,9 @@
 	
 	print("✅ ligand_coords.csv written.")
 	
-|3,0,2,1,25,0,1749594149,"#!/usr/bin/env python3","import sys","from Bio.PDB import PDBParser","","if len(sys.argv) != 3:","    sys.exit(\"Usage: extract_ligand_from_pdb.py <complex.pdb> <LIG_RESNAME>\")","","pdb_file, resname = sys.argv[1], sys.argv[2].upper()","parser = PDBParser(QUIET=True)","structure = parser.get_structure(\"X\", pdb_file)","","coords = []","for atom in structure.get_atoms():","    if atom.get_parent().get_resname().strip() == resname:",>41
+|3,0,3,1,25,0,1749594149,"#!/usr/bin/env python3","import sys","from Bio.PDB import PDBParser","","if len(sys.argv) != 3:","    sys.exit(\"Usage: extract_ligand_from_pdb.py <complex.pdb> <LIG_RESNAME>\")","","pdb_file, resname = sys.argv[1], sys.argv[2].upper()","parser = PDBParser(QUIET=True)","structure = parser.get_structure(\"X\", pdb_file)","","coords = []","for atom in structure.get_atoms():","    if atom.get_parent().get_resname().strip() == resname:",>41
 |<"        coords.append(atom.get_coord())","","if not coords:","    sys.exit(f\"❌ No atoms of residue {resname} found in {pdb_file}\")","","with open(\"ligand_coords.csv\", \"w\") as out:","    for x, y, z in coords:","        out.write(f\"{x:.3f},{y:.3f},{z:.3f}\\n\")","","print(\"✅ ligand_coords.csv written.\")",""
-"3	LINE	0
+"4	LINE	0
 	#!/bin/bash
 	set -e
 	
@@ -212,10 +215,10 @@
 	  mol 1
 	  lpbe
 	  bcfl sdh
-|3,0,3,1,50,0,1749593993,"#!/bin/bash","set -e","","# --- Inputs ---","PDB_ID=\"$1\"","LIGAND_SDF=\"$2\"","","if [[ -z \"$PDB_ID\" || -z \"$LIGAND_SDF\" || ! -r \"$LIGAND_SDF\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <ligand.sdf>\"","  exit 1","fi","","WORKDIR=\"apbs_run\"","rm -rf \"$WORKDIR\"","mkdir -p \"$WORKDIR\"","cd \"$WORKDIR\"","","# --- Step 1: Download PDB ---","echo \"⬇️ Downloading PDB $PDB_ID…\"",>80
+|3,0,4,1,50,0,1749593993,"#!/bin/bash","set -e","","# --- Inputs ---","PDB_ID=\"$1\"","LIGAND_SDF=\"$2\"","","if [[ -z \"$PDB_ID\" || -z \"$LIGAND_SDF\" || ! -r \"$LIGAND_SDF\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <ligand.sdf>\"","  exit 1","fi","","WORKDIR=\"apbs_run\"","rm -rf \"$WORKDIR\"","mkdir -p \"$WORKDIR\"","cd \"$WORKDIR\"","","# --- Step 1: Download PDB ---","echo \"⬇️ Downloading PDB $PDB_ID…\"",>80
 |<"wget -q \"https://files.rcsb.org/download/${PDB_ID}.pdb\" -O \"${PDB_ID}.pdb\"","","# --- Step 2: Convert to PQR ---","echo \"⚗️ Converting to PQR…\"","pdb2pqr --ff=parse \"${PDB_ID}.pdb\" \"${PDB_ID}.pqr\"","","# --- Step 3: Extract ligand coordinates ---","echo \"🧠 Extracting ligand coords…\"","ABS_SDF=$(realpath \"../$LIGAND_SDF\")","if [[ ! -r \"$ABS_SDF\" ]]; then","  echo \"❌ Ligand file not found: $ABS_SDF\"","  exit 1","fi",>50
 |<"python3 ../extract_ligand_coords.py \"$ABS_SDF\"","","# --- Step 4: Write APBS input (and request DX output) ---","cat > apbs_input.in <<EOF","read","  mol pqr ${PDB_ID}.pqr","end","","elec","  mg-auto","  dime 65 65 65","  cglen 80.0 80.0 80.0","  fglen 40.0 40.0 40.0","  cgcent mol 1","  fgcent mol 1","  mol 1","  lpbe","  bcfl sdh"
-"4	LINE	0
+"5	LINE	0
 	# extract_ligand_from_pdb.py
 	import sys
 	from Bio.PDB import PDBParser
@@ -241,9 +244,9 @@
 	        out.write(f"{x:.3f},{y:.3f},{z:.3f}\n")
 	print("✅ ligand_coords.csv written.")
 	
-|3,0,4,1,25,0,1749593971,"# extract_ligand_from_pdb.py","import sys","from Bio.PDB import PDBParser","","pdb, resname = sys.argv[1], sys.argv[2]","parser = PDBParser(QUIET=True)","structure = parser.get_structure(\"X\", pdb)","","coords = []","for model in structure:","    for chain in model:","        for res in chain:","            if res.get_resname().strip() == resname:","                for atom in res:","                    x,y,z = atom.get_coord()",>44
+|3,0,5,1,25,0,1749593971,"# extract_ligand_from_pdb.py","import sys","from Bio.PDB import PDBParser","","pdb, resname = sys.argv[1], sys.argv[2]","parser = PDBParser(QUIET=True)","structure = parser.get_structure(\"X\", pdb)","","coords = []","for model in structure:","    for chain in model:","        for res in chain:","            if res.get_resname().strip() == resname:","                for atom in res:","                    x,y,z = atom.get_coord()",>44
 |<"                    coords.append((x,y,z))","","if not coords:","    raise ValueError(f\"No atoms of residue {resname} found in {pdb}\")","","with open(\"ligand_coords.csv\",\"w\") as out:","    for x,y,z in coords:","        out.write(f\"{x:.3f},{y:.3f},{z:.3f}\\n\")","print(\"✅ ligand_coords.csv written.\")",""
-"5	LINE	0
+"6	LINE	0
 	#!/usr/bin/env python3
 	import sys
 	from rdkit import Chem
@@ -268,9 +271,9 @@
 	        f.write(f"{x:.3f},{y:.3f},{z:.3f}\n")
 	print("✅ ligand_coords.csv written.")
 	
-|3,0,5,1,24,0,1749593717,"#!/usr/bin/env python3","import sys","from rdkit import Chem","from rdkit.Chem import AllChem","","ligand_path = sys.argv[1]","suppl = Chem.SDMolSupplier(ligand_path, removeHs=True)","mols = [m for m in suppl if m is not None]","if not mols:","    sys.exit(f\"❌ No valid molecules in {ligand_path}\")","mol = mols[0]","","if mol.GetNumConformers() == 0:","    mol = Chem.AddHs(mol)","    AllChem.EmbedMolecule(mol)",>38
+|3,0,6,1,24,0,1749593717,"#!/usr/bin/env python3","import sys","from rdkit import Chem","from rdkit.Chem import AllChem","","ligand_path = sys.argv[1]","suppl = Chem.SDMolSupplier(ligand_path, removeHs=True)","mols = [m for m in suppl if m is not None]","if not mols:","    sys.exit(f\"❌ No valid molecules in {ligand_path}\")","mol = mols[0]","","if mol.GetNumConformers() == 0:","    mol = Chem.AddHs(mol)","    AllChem.EmbedMolecule(mol)",>38
 |<"    AllChem.UFFOptimizeMolecule(mol)","","conf = mol.GetConformer()","with open(\"ligand_coords.csv\", \"w\") as f:","    for atom in mol.GetAtoms():","        x,y,z = conf.GetAtomPosition(atom.GetIdx())","        f.write(f\"{x:.3f},{y:.3f},{z:.3f}\\n\")","print(\"✅ ligand_coords.csv written.\")",""
-"6	LINE	0
+"7	LINE	0
 	#!/bin/bash
 	set -e
 	
@@ -321,10 +324,10 @@
 	  temp 298.15
 	  calcenergy total
 	  calcforce no
-|3,0,6,1,50,0,1749593703,"#!/bin/bash","set -e","","PDB_ID=\"$1\"; LIGAND_SDF=\"$2\"","if [[ -z \"$PDB_ID\" || -z \"$LIGAND_SDF\" || ! -r \"$LIGAND_SDF\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <ligand.sdf>\" >&2","  exit 1","fi","","# Prepare working dir","WORK=apbs_run","mkdir -p \"$WORK\" && cd \"$WORK\"","","# 1) Download & PQR","echo \"⬇️ Downloading PDB $PDB_ID…\"","wget -q \"https://files.rcsb.org/download/${PDB_ID}.pdb\" -O \"${PDB_ID}.pdb\"",>38
+|3,0,7,1,50,0,1749593703,"#!/bin/bash","set -e","","PDB_ID=\"$1\"; LIGAND_SDF=\"$2\"","if [[ -z \"$PDB_ID\" || -z \"$LIGAND_SDF\" || ! -r \"$LIGAND_SDF\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <ligand.sdf>\" >&2","  exit 1","fi","","# Prepare working dir","WORK=apbs_run","mkdir -p \"$WORK\" && cd \"$WORK\"","","# 1) Download & PQR","echo \"⬇️ Downloading PDB $PDB_ID…\"","wget -q \"https://files.rcsb.org/download/${PDB_ID}.pdb\" -O \"${PDB_ID}.pdb\"",>38
 |<"echo \"⚗️ Converting to PQR…\"","pdb2pqr --ff=parse \"${PDB_ID}.pdb\" \"${PDB_ID}.pqr\"","","# 2) Extract ligand coords","echo \"🧠 Extracting ligand coords…\"","ABS_SDF=$(realpath \"../$LIGAND_SDF\")","python3 ../extract_ligand_coords.py \"$ABS_SDF\"","","# 3) Write APBS input with DX output","cat > apbs_input.in <<EOF","read","  mol pqr ${PDB_ID}.pqr","end","","elec","  mg-auto","  dime 65 65 65","  cglen 80.0 80.0 80.0","  fglen 40.0 40.0 40.0","  cgcent mol 1",>16
 |<"  fgcent mol 1","  mol 1","  lpbe","  bcfl sdh","  pdie 2.0","  sdie 78.5","  srad 1.4","  swin 0.3","  srfm smol","  chgm spl2","  sdens 0.030","  temp 298.15","  calcenergy total","  calcforce no"
-"7	LINE	0
+"8	LINE	0
 	import sys
 	from rdkit import Chem
 	from rdkit.Chem import AllChem
@@ -351,9 +354,9 @@
 	
 	print("✅ ligand_coords.csv written.")
 	
-|3,0,7,1,26,0,1749593603,"import sys","from rdkit import Chem","from rdkit.Chem import AllChem","","ligand_path = sys.argv[1]","suppl = Chem.SDMolSupplier(ligand_path, removeHs=True)","","mols = [m for m in suppl if m is not None]","if not mols:","    raise ValueError(f\"❌ No valid molecules found in {ligand_path}\")","mol = mols[0]","","if mol.GetNumConformers() == 0:","    print(\"⚠️ No conformer found, generating 3D structure...\")",>27
+|3,0,8,1,26,0,1749593603,"import sys","from rdkit import Chem","from rdkit.Chem import AllChem","","ligand_path = sys.argv[1]","suppl = Chem.SDMolSupplier(ligand_path, removeHs=True)","","mols = [m for m in suppl if m is not None]","if not mols:","    raise ValueError(f\"❌ No valid molecules found in {ligand_path}\")","mol = mols[0]","","if mol.GetNumConformers() == 0:","    print(\"⚠️ No conformer found, generating 3D structure...\")",>27
 |<"    mol = Chem.AddHs(mol)","    AllChem.EmbedMolecule(mol)","    AllChem.UFFOptimizeMolecule(mol)","","conf = mol.GetConformer()","with open(\"ligand_coords.csv\", \"w\") as f:","    for atom in mol.GetAtoms():","        pos = conf.GetAtomPosition(atom.GetIdx())","        f.write(f\"{pos.x:.3f},{pos.y:.3f},{pos.z:.3f}\\n\")","","print(\"✅ ligand_coords.csv written.\")",""
-"8	LINE	0
+"9	LINE	0
 	#!/bin/bash
 	set -e
 	
@@ -404,54 +407,66 @@
 	  bcfl sdh
 	  pdie 2.0
 	  sdie 78.5
-|3,0,8,1,50,0,1749593589,"#!/bin/bash","set -e","","# --- Inputs ---","PDB_ID=\"$1\"","LIGAND_SDF=\"$2\"","","if [[ -z \"$PDB_ID\" || -z \"$LIGAND_SDF\" || ! -f \"$LIGAND_SDF\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <ligand.sdf>\"","  exit 1","fi","","BASENAME=\"${PDB_ID}\"","mkdir -p apbs_run && cd apbs_run","","# --- Step 1: Download PDB ---","echo \"⬇️ Downloading $PDB_ID...\"",>82
+|3,0,9,1,50,0,1749593589,"#!/bin/bash","set -e","","# --- Inputs ---","PDB_ID=\"$1\"","LIGAND_SDF=\"$2\"","","if [[ -z \"$PDB_ID\" || -z \"$LIGAND_SDF\" || ! -f \"$LIGAND_SDF\" ]]; then","  echo \"❌ Usage: $0 <PDB_ID> <ligand.sdf>\"","  exit 1","fi","","BASENAME=\"${PDB_ID}\"","mkdir -p apbs_run && cd apbs_run","","# --- Step 1: Download PDB ---","echo \"⬇️ Downloading $PDB_ID...\"",>82
 |<"wget -q \"https://files.rcsb.org/download/${PDB_ID}.pdb\" -O \"${BASENAME}.pdb\"","","# --- Step 2: Convert PDB → PQR ---","echo \"⚗️ Converting ${BASENAME}.pdb to ${BASENAME}.pqr...\"","pdb2pqr --ff=parse \"${BASENAME}.pdb\" \"${BASENAME}.pqr\"","","# --- Step 3: Extract ligand atom coordinates using RDKit ---","echo \"🧠 Extracting ligand coordinates from $LIGAND_SDF...\"","ABS_PATH=\"$(realpath \"$LIGAND_SDF\")\"","if [[ ! -r \"$ABS_PATH\" ]]; then",>49
 |<"  echo \"❌ Ligand file not found: $ABS_PATH\"","  exit 1","fi","python3 ../extract_ligand_coords.py \"$ABS_PATH\"","","# --- Step 4: Write APBS input file ---","cat > apbs_input.in <<EOF","read","  mol pqr ${BASENAME}.pqr","end","","elec","  mg-auto","  dime 65 65 65","  cglen 80.0 80.0 80.0","  fglen 40.0 40.0 40.0","  cgcent mol 1","  fgcent mol 1","  mol 1","  lpbe","  bcfl sdh","  pdie 2.0","  sdie 78.5"
-"9	CHAR	0
-	echo "🧠 Extracting ligand coordinates from $LIGAND_SDF..."
-	python3 ../extract_ligand_coords.py "$LIGAND_SDF"
-	
-	
-|3,0,9,0,4,0,1749593438,"echo \"🧠 Extracting ligand coordinates from $LIGAND_SDF...\"","python3 ../extract_ligand_coords.py \"$LIGAND_SDF\"","",""
 "-	CHAR	0
 	s
 |3,0,36,0,1,0,1749589221,"s"
 
 # File marks:
-'0  8  7  ~/.gitignore
-|4,48,8,7,1749594562,"~/.gitignore"
-'1  69  0  ~/apbs/run_apbs_with_ligand.sh
-|4,49,69,0,1749594171,"~/apbs/run_apbs_with_ligand.sh"
-'2  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,50,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
-'3  1  0  ~/apbs/extract_ligand_
-|4,51,1,0,1749594142,"~/apbs/extract_ligand_"
-'4  2  0  ~/apbs/run_apbs_with_ligand.sh
-|4,52,2,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
-'5  73  0  ~/apbs/run_apbs_with_ligand.sh
-|4,53,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
-'6  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,54,2,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
-'7  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,55,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
-'8  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,56,2,0,1749593868,"~/apbs/extract_ligand_from_pdb.py"
+'0  1  0  ~/apbs/apbs_run/ligand_potential.csv
+|4,48,1,0,1749597008,"~/apbs/apbs_run/ligand_potential.csv"
+'1  8  7  ~/.gitignore
+|4,49,8,7,1749594562,"~/.gitignore"
+'2  69  0  ~/apbs/run_apbs_with_ligand.sh
+|4,50,69,0,1749594171,"~/apbs/run_apbs_with_ligand.sh"
+'3  23  0  ~/apbs/extract_ligand_from_pdb.py
+|4,51,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
+'4  1  0  ~/apbs/extract_ligand_
+|4,52,1,0,1749594142,"~/apbs/extract_ligand_"
+'5  2  0  ~/apbs/run_apbs_with_ligand.sh
+|4,53,2,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+'6  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,54,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+'7  2  0  ~/apbs/extract_ligand_from_pdb.py
+|4,55,2,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
+'8  23  0  ~/apbs/extract_ligand_from_pdb.py
+|4,56,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
 '9  2  0  ~/apbs/extract_ligand_from_pdb.py
 |4,57,2,0,1749593868,"~/apbs/extract_ligand_from_pdb.py"
 
 # Jumplist (newest first):
+-'  1  0  ~/apbs/apbs_run/ligand_potential.csv
+|4,39,1,0,1749597008,"~/apbs/apbs_run/ligand_potential.csv"
 -'  8  7  ~/.gitignore
 |4,39,8,7,1749594562,"~/.gitignore"
+-'  8  7  ~/.gitignore
+|4,39,8,7,1749594562,"~/.gitignore"
+-'  1  0  ~/.gitignore
+|4,39,1,0,1749594556,"~/.gitignore"
 -'  1  0  ~/.gitignore
 |4,39,1,0,1749594556,"~/.gitignore"
 -'  69  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,69,0,1749594171,"~/apbs/run_apbs_with_ligand.sh"
 -'  69  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,69,0,1749594171,"~/apbs/run_apbs_with_ligand.sh"
+-'  69  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,69,0,1749594171,"~/apbs/run_apbs_with_ligand.sh"
+-'  69  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,69,0,1749594171,"~/apbs/run_apbs_with_ligand.sh"
 -'  1  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,1,0,1749594160,"~/apbs/run_apbs_with_ligand.sh"
 -'  1  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,1,0,1749594160,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749594160,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749594160,"~/apbs/run_apbs_with_ligand.sh"
+-'  2  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,2,0,1749594158,"~/apbs/run_apbs_with_ligand.sh"
+-'  2  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,2,0,1749594158,"~/apbs/run_apbs_with_ligand.sh"
 -'  2  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,2,0,1749594158,"~/apbs/run_apbs_with_ligand.sh"
 -'  2  0  ~/apbs/run_apbs_with_ligand.sh
@@ -464,6 +479,14 @@
 |4,39,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
 -'  23  0  ~/apbs/extract_ligand_from_pdb.py
 |4,39,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
+-'  23  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
+-'  23  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
+-'  23  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
+-'  23  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,23,0,1749594151,"~/apbs/extract_ligand_from_pdb.py"
 -'  1  0  ~/apbs/extract_ligand_from_pdb.py
 |4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
 -'  1  0  ~/apbs/extract_ligand_from_pdb.py
@@ -472,6 +495,22 @@
 |4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
 -'  1  0  ~/apbs/extract_ligand_from_pdb.py
 |4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
+-'  1  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
+-'  1  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
+-'  1  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
+-'  1  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,1,0,1749594149,"~/apbs/extract_ligand_from_pdb.py"
+-'  2  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,2,0,1749594146,"~/apbs/extract_ligand_from_pdb.py"
+-'  2  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,2,0,1749594146,"~/apbs/extract_ligand_from_pdb.py"
+-'  2  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,2,0,1749594146,"~/apbs/extract_ligand_from_pdb.py"
+-'  2  0  ~/apbs/extract_ligand_from_pdb.py
+|4,39,2,0,1749594146,"~/apbs/extract_ligand_from_pdb.py"
 -'  2  0  ~/apbs/extract_ligand_from_pdb.py
 |4,39,2,0,1749594146,"~/apbs/extract_ligand_from_pdb.py"
 -'  2  0  ~/apbs/extract_ligand_from_pdb.py
@@ -496,6 +535,38 @@
 |4,39,1,0,1749594142,"~/apbs/extract_ligand_"
 -'  1  0  ~/apbs/extract_ligand_
 |4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  1  0  ~/apbs/extract_ligand_
+|4,39,1,0,1749594142,"~/apbs/extract_ligand_"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
+-'  73  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
 -'  73  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,73,0,1749594003,"~/apbs/run_apbs_with_ligand.sh"
 -'  73  0  ~/apbs/run_apbs_with_ligand.sh
@@ -528,6 +599,22 @@
 |4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
 -'  1  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
+-'  1  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,1,0,1749593993,"~/apbs/run_apbs_with_ligand.sh"
 -'  2  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,2,0,1749593990,"~/apbs/run_apbs_with_ligand.sh"
 -'  2  0  ~/apbs/run_apbs_with_ligand.sh
@@ -544,104 +631,21 @@
 |4,39,2,0,1749593990,"~/apbs/run_apbs_with_ligand.sh"
 -'  2  0  ~/apbs/run_apbs_with_ligand.sh
 |4,39,2,0,1749593990,"~/apbs/run_apbs_with_ligand.sh"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  23  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,23,0,1749593975,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  1  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,1,0,1749593971,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
--'  2  0  ~/apbs/extract_ligand_from_pdb.py
-|4,39,2,0,1749593968,"~/apbs/extract_ligand_from_pdb.py"
+-'  2  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,2,0,1749593990,"~/apbs/run_apbs_with_ligand.sh"
+-'  2  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,2,0,1749593990,"~/apbs/run_apbs_with_ligand.sh"
+-'  2  0  ~/apbs/run_apbs_with_ligand.sh
+|4,39,2,0,1749593990,"~/apbs/run_apbs_with_ligand.sh"
 
 # History of marks within files (newest to oldest):
+
+> ~/apbs/apbs_run/ligand_potential.csv
+	*	1749597006	0
+	"	1	0
+	^	1	0
+	.	1	0
+	+	1	0
 
 > ~/.gitignore
 	*	1749594561	0
