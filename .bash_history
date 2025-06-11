@@ -240,3 +240,48 @@ git commit -m "rm requirements.txt; simplify README.md"
 git push
 ls
 vi ~/.bashrc
+ls
+ls apbs
+cd 30
+cd 3oy1/
+ls
+grep mg apbs_input.in 
+python3 generate_apbs_input.py 3OY1
+cat apbs_input.in 
+apbs apbs_input.in
+vi generate_apbs_input_manual.py
+chmod +x generate_apbs_input_manual.py
+python3 generate_apbs_input_manual.py 3OY1
+apbs apbs_input.in
+ls
+which apbs
+apbs --version
+ls;
+vi apbs_input.in 
+python3 generate_apbs_input_manual.py 3OY1
+apbs apbs_input.in
+ls
+vi apbs_input.in 
+cd ..
+ls
+cd apbs/
+ls
+cd apbs_run
+ls
+cat apbs_input.in 
+apbs apbs_input.in 
+ls
+sl -l
+ls -ls
+cat apbs_input.in 
+cd ..
+ls
+cd ..
+ls
+cd 30
+cd 3oy1/
+ls
+vi apbs_input.in 
+apbs apbs_input.in 
+ls
+multivalue ligand_coords.csv 3OY1.dx ligand_potential.csv

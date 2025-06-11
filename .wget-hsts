@@ -2,4 +2,4 @@
 # Edit at your own risk.
 # <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
 pubchem.ncbi.nlm.nih.gov	0	1	1749592852	31536000
-files.rcsb.org	0	1	1749594268	16000000
+files.rcsb.org	0	1	1749599323	16000000
