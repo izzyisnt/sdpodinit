@@ -72,7 +72,8 @@ install_chem_stack() {
 
 
   pip install git+https://github.com/openmm/openmmforcefields.git
-  pip install importlib_resources
+  pip install git+https://github.com/openforcefield/openff-units.git@0.1.3
+  pip install git+https://github.com/openforcefield/openff-toolkit.git@0.15.2
   pip install git+https://github.com/prody/ProDy.git
   pip install git+https://github.com/openmm/pdbfixer.git@master
   pip install MDAnalysis==2.5.0  # or a recent stable version
