@@ -76,6 +76,8 @@ install_chem_stack() {
   pip install git+https://github.com/prody/ProDy.git
   pip install git+https://github.com/openmm/pdbfixer.git@master
   pip install MDAnalysis==2.5.0  # or a recent stable version
+  pip install spyrmsd
+
 
 }
 

@@ -28,6 +28,7 @@ MODULES = {
     "rdkit": None,
     "openmm": "8.2",
     "MDAnalysis": "2.4.0",
+    "spyrmsd": None,
     "Bio": "1.79",  # biopython
     "prody": "2.5.0",
     "babel": "2.13.1",
