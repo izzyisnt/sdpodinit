@@ -75,6 +75,8 @@ install_chem_stack() {
   pip install importlib_resources
   pip install git+https://github.com/prody/ProDy.git
   pip install git+https://github.com/openmm/pdbfixer.git@master
+  pip install MDAnalysis==2.5.0  # or a recent stable version
+
 }
 
 # ───── ML Utilities ─────────────────────────────────────────────────────
@@ -98,6 +100,7 @@ install_pyg() {
     torch_cluster \
     torch_spline_conv \
     --find-links https://data.pyg.org/whl/torch-2.5.1+cu121.html
+  pip install torch-geometric -f https://data.pyg.org/whl/torch-2.5.0+cu121.html
 }
 
 # ───── Mesh / Geometry Tools ────────────────────────────────────────────

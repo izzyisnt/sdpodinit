@@ -24,8 +24,10 @@ MODULES = {
     "torch_sparse": None,
     "torch_cluster": None,
     "torch_spline_conv": None,
+    "torch_geometric": "2.6.1",
     "rdkit": None,
     "openmm": "8.2",
+    "MDAnalysis": "2.4.0",
     "Bio": "1.79",  # biopython
     "prody": "2.5.0",
     "babel": "2.13.1",
