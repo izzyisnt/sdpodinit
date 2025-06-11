@@ -285,3 +285,9 @@ vi apbs_input.in
 apbs apbs_input.in 
 ls
 multivalue ligand_coords.csv 3OY1.dx ligand_potential.csv
+ls
+git add 3oy1/
+git add .
+git commit -m "solving potential for 3oy1"
+git push
+dpkg -l | grep apbs
