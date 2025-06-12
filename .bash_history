@@ -882,3 +882,7 @@ rm index.html
 wget https://ccsb.scripps.edu/msms/download/933/
 rm index.html 
 ls
+git status
+git add .
+git commit -m "clean for merge"
+git push
