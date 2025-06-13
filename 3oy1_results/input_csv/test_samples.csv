@@ -1,0 +1,2 @@
+protein_path,pocket_path,ref_ligand,ligand_path,protein_surface
+/root/SurfDock/data/eval_sample_dirs/test_samples/3oy1/3oy1_protein_processed.pdb,/root/SurfDock/data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/3oy1/3oy1_protein_processed_8A.pdb,/root/SurfDock/data/eval_sample_dirs/test_samples/3oy1/3oy1_ligand.sdf,/root/SurfDock/data/eval_sample_dirs/test_samples/3oy1/3oy1_ligand.sdf,/root/SurfDock/data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/3oy1/3oy1_protein_processed_8A.ply
