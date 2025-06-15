@@ -1214,3 +1214,10 @@ bash run_apbs_with_ligand.sh 3OY1 589
 ls
 pbcopy < run_apbs_with_ligand.sh 
 git pull;
+git status
+git add .
+git commit - "..."
+git commit -m "..."
+git push
+git pull
+ls -al
