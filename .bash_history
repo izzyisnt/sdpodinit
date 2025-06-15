@@ -1184,3 +1184,33 @@ ls comp_surface/
 cd comp_surface/prepare_target/
 ls
 fg
+ls
+git status
+ls -alt
+ls;
+git diff
+git status
+rm io.mc
+ls;
+git add .
+git commit -m "saturday cleanup"
+git push
+git pull
+ls;
+git pull
+ls;
+which multivalue
+ls -al /usr/local/bin/multivalue
+ls /usr/local/multivalue/
+ls /usr/local/multivalue/multivalue 
+git pull
+ls
+cd apbs/
+ls
+bash run_apbs_with_ligand.sh 
+bash run_apbs_with_ligand.sh 3OY1 789
+grep -i hetatm apbs_run/3OY1.pdb 
+bash run_apbs_with_ligand.sh 3OY1 589
+ls
+pbcopy < run_apbs_with_ligand.sh 
+git pull;
