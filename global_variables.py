@@ -5,10 +5,10 @@ import os
 def abspath(path): return str(Path(path).expanduser())
 
 # Hard paths
-msms_bin        = abspath("~/SurfDock/comp_surface/tools/APBS/bin/msms")
-apbs_bin        = abspath("~/SurfDock/comp_surface/tools/APBS/bin/apbs")
-pdb2pqr_bin     = abspath("~/SurfDock/comp_surface/tools/PDB2PQR/pdb2pqr")
-multivalue_bin  = abspath("~/SurfDock/comp_surface/tools/APBS/bin/multivalue")
+msms_bin        = abspath("/usr/local/bin/msms")
+apbs_bin        = abspath("/usr/local/bin/apbs")
+pdb2pqr_bin     = abspath("/usr/bin//pdb2pqr")
+multivalue_bin  = abspath("/usr/local/bin/multivalue")
 
 # Export to environment (optional, but SurfDock subprocesses may use them)
 os.environ["MSMS_BIN"]        = msms_bin

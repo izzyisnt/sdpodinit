@@ -886,3 +886,301 @@ git status
 git add .
 git commit -m "clean for merge"
 git push
+ls;
+git pull
+ls;
+gunzip msms_i86_64Linux2_2.6.1.tar.gz | tar xvf -
+file msms_i86_64Linux2_2.6.1.tar 
+ls
+tar xvf msms_i86_64Linux2_2.6.1.tar 
+ls
+mv msms.x86_64Linux2.2.6.1.staticgcc /usr/loca/bin/msms
+mv msms.x86_64Linux2.2.6.1.staticgcc /usr/local/bin/msms
+msms -h
+chmod 755 /usr/local/bin/msms/
+msms -h
+printenv PATH
+which msms
+ls /usr/local/bin/msms
+ls -l /usr/local/bin/msms
+ls
+cd /usr/local/bin
+ls /usr/local/msms
+/usr/local/msms/msms -h
+/usr/local/msms/msms --version
+s
+ls
+ls msms
+ls -l msms
+rm msms
+rm -rf msms
+rm MSMS_i86_64Linux2.2.6.1.tar.gz
+pwd
+ls
+ls -alt |head
+cd
+ls;
+mv msms.x86_64Linux2.2.6.1 /usr/local/bin/msms
+msms -h
+ls
+rm -f 1crn.pdb 1crn.xyzr 1crn.xyzrn atmtypenumbers pdb_to_xyzr pdb_to_xyzrn       msms.x86_64Linux2.2.6.1 msms.html msms.1 README ReleaseNotes
+ls;
+mkdir share
+git mv msms_i86_64Linux2_2.6.1.tar share
+cd share
+ls
+ls -al;
+ls
+pwd
+cd ..
+ls
+gzip msms_i86_64Linux2_2.6.1.tar 
+git mv msms_i86_64Linux2_2.6.1.tar.gz share
+git status
+git add .
+git commit -m "mv msms tarball to share"
+git push
+ls
+vi getresults.bash 
+bash getresults.bash 
+ls
+cd second_result/
+ls
+ls data
+ls -R data
+ls
+ls model_weights/
+ls -R model_weights/
+ls
+ls docking_result/
+ls -R docking_result/
+ls
+ls data
+cd data
+cd Screen_sample_dirs/
+ls
+cd test_samples/
+ls
+cd 1a0q/
+ls
+cd ..
+ls
+cd ..
+ls
+cd .
+cd ..
+ls
+cd eval_sample_dirs/
+ls
+ls test_samples/
+ls test_samples/1a0q/
+ls SurfDock_eval_samples/
+ls SurfDock_eval_samples/*
+ls SurfDock_eval_samples/*/*
+ls SurfDock_eval_samples/*/*/*
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+git status
+ls
+ls test
+rm -rf testresults/
+mv second_result test_results
+sl
+ls;
+git add test_results/
+git status
+git commit -m "add test restuls"
+git pus
+git push
+ls
+cd test_
+ls
+cd test_results/
+ls
+cd model_weights/
+ls
+ls docking
+ls posepredict/
+ls screen/
+ls docking/
+cd ..
+ls
+cd ..
+ls
+git rm -r test_results/model_weights/
+git commit -m "rm model weights"
+git push
+ls
+cd SurfDock/
+ls
+cd data
+ls
+cd eval_sample_dirs/
+ls
+cd test_samples/
+ls
+cd 1a0q/
+ls
+pwd
+ls
+ls 0alt
+ls -alt
+date
+pwd
+ls
+cd 3oy1/
+ls
+ls -l
+ls
+cd ..
+ls
+rm -rf data/eval_sample_dirs/SurfDock_eval_samples/repeat_*/test_samples_8A_surface/*
+rm -rf data/eval_sample_dirs/SurfDock_eval_samples/repeat_*/test_samples_esmbedding/*
+ls data/Screen_sample_dirs/test_samples
+ls SurfDock/data/Screen_sample_dirs/test_samples
+ls SurfDock/data/Screen_sample_dirs/test_samples/
+ls SurfDock/data/Screen_sample_dirs/test_samples/1a0q/
+rm -rf SurfDock/data/Screen_sample_dirs/test_samples/1a0q
+cp -rp 3oy1/ SurfDock/data/Screen_sample_dirs/test_samples
+cd SurfDock/data
+ls
+cd eval_sample_dirs/
+ls
+ls SurfDock_eval_samples/
+cd SurfDock_eval_samples/
+ls
+ls *
+ls -R
+pwd
+ls
+rm -rf repeat_1212/test_samples_8A_surface/1a0q
+rm -rf repeat_1212/test_samples_esmbedding/*1a0q*
+rm -rf repeat_250102/test_samples_8A_surface/1a0q
+rm -rf repeat_250102/test_samples_esmbedding/*1a0q*
+ls -alR 
+rm repeat_250102/input_csv_files/test_samples.csv
+rm repeat_250102/test_samples_esmbedding/test_samples.fasta
+ls -lR 
+rm repeat_250102/test_samples_esmbedding/esm_embedding_output/1a0q_protein_processed.pdb_chain_*.pt
+rm repeat_250102/test_samples_esmbedding/esm_embedding_pocket_output/1a0q_protein_processed_8A.pt
+ls -Rl
+rm repeat_1212/test_samples_esmbedding/test_samples.fasta
+rm repeat_1212/test_samples_esmbedding/esm_embedding_output/1a0q_protein_processed.pdb_chain_*.pt
+rm repeat_1212/test_samples_esmbedding/esm_embedding_pocket_output/1a0q_protein_processed_8A.pt
+rm repeat_1212/test_samples_esmbedding/test_samples.fasta
+ls -lR
+rm ./repeat_1212/input_csv_files/test_samples.csv 
+ls -lR
+pwd
+ls
+cd ..
+cd ev
+ls
+cd SurfDock_eval_samples/
+ls
+ls -lR repeat_1212/
+ls
+cd ..
+ls
+ls SurfDock_eval_samples/
+ls
+cd SurfDock_eval_samples/
+ls
+rm -rf repeat_1212/
+cd ..
+cd ../..
+ls
+ls data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/3o1r
+ls data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102
+ls data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102/
+ls data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/
+ls
+cd data
+ls
+cd test_sets/
+ls
+cd ..
+cd eval_sample_dirs/
+ls
+cd test_samples/
+ls
+ls -R
+pwd
+ls
+rm -rf 1a0q/
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+ls -alR data
+mv data/Screen_sample_dirs/test_samples/3oy1 data/eval_sample_dirs/test_samples/
+whats this for, we didn't do this last time repeat_250102
+cat bash_scripts/test_scripts/eval_samples.sh 
+ls
+ls data/eval_sample_dirs/test_samples/3oy1/
+cd comp_surface/prepare_target/
+pwd
+ash ../../bash_scripts/test_scripts/eval_samples.sh 
+bash ../../bash_scripts/test_scripts/eval_samples.sh 
+_ ____  _   _ ____  _     _     ____  _     ____  _        _
+../../bash_scripts/test_scripts/eval_samples.sh: line 15: /root/miniforge3/bin/activate: No such file or directory
+SurfDockdir : /root/SurfDock
+------------------------------------ Step1 : Setup Params --------------------------------------
+Using GPU devices: 0
+----------------------------- Step1 : Compute Target Surface -----------------------------------
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 23045.63it/s]
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.96it/s]
+Warning: Complex edge loop detected!  Vertex 46 has valance 4
+Warning: Complex edge loop detected!  Vertex 45 has valance 4
+cd /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+ls
+cd SurfDock_docking_result/
+ls
+cd 3oy1_protein_processed_8A_3oy1_ligand/
+ls
+cd
+ls
+cat > jnk3res.py
+ls
+bash jnk3res.py 
+ls
+ls -alt
+ls
+ls SurfDock/
+mv SurfDock/collected_results/ .
+cd collected_results/
+ls
+cd repeat_250102/
+ls
+pwd
+cd ..
+ls
+cd repeat_250102/
+ls
+cd ..
+ls
+mv repeat_250102/ /root/3oy1_results
+cd /root
+ls
+git add 3oy1_results/
+git commmit -m 3oy1_results/
+git commit -m 3oy1_results/
+git push
+ls
+cd SurfDock/
+ls
+python scripts/prepare_target.py        --pdb data/raw/3oy1.pdb        --out_dir data/processed_proteins/3oy1        --run_apbs --keep_dx
+ls data
+ls comp_surface/
+cd comp_surface/prepare_target/
+ls
+fg

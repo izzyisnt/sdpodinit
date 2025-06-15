@@ -1,0 +1,27 @@
+#!/bin/bash
+
+DEST="/root/second_result"
+SRC="/root/SurfDock"
+
+mkdir -p "$DEST"
+
+echo "Copying recent files modified in the last 2 days..."
+
+# Adjust the -mtime value (1 = last 24h, 2 = last 48h, etc.)
+find "$SRC" -type f -mtime -2 ! -path "$DEST/*" | while read -r file; do
+    # Preserve subdirectory structure
+    rel_path="${file#$SRC/}"
+    dest_path="$DEST/$rel_path"
+    dest_dir=$(dirname "$dest_path")
+
+    mkdir -p "$dest_dir"
+    
+    if [[ ! -f "$dest_path" ]]; then
+        cp "$file" "$dest_path"
+        echo "Copied: $rel_path"
+    else
+        echo "Skipped (already exists): $rel_path"
+    fi
+done
+
+echo "✅ Done. Files copied to: $DEST"
