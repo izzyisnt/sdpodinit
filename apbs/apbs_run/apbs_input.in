@@ -1,5 +1,5 @@
 read
-  mol pqr 1MBN.pqr
+  mol pqr 3OY1.pqr
 end
 
 elec
@@ -22,7 +22,7 @@ elec
   temp 298.15
   calcenergy total
   calcforce no
-  write pot dx 1MBN
+  write pot dx 3OY1
 end
 
 quit

@@ -20,7 +20,7 @@ echo "🧠 Extracting ligand coords for residue ${LIG_RES}…"
 python3 ../extract_ligand_from_pdb.py "${PDB_ID}.pdb" "${LIG_RES}"
 
 echo "⚗️ Converting ${PDB_ID}.pdb → ${PDB_ID}.pqr…"
-pdb2pqr --ff=parse "${PDB_ID}.pdb" "${PDB_ID}.pqr"
+pdb2pqr --ff=PARSE "${PDB_ID}.pdb" "${PDB_ID}.pqr"
 
 cat > apbs_input.in <<EOF
 read

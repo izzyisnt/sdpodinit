@@ -16,6 +16,9 @@ alias goeval='cd /root/SurfDock/comp_surface/prepare_target && bash /root/SurfDo
 ln -s /usr/local/lib/python3.10/dist-packages/esm /root/SurfDock
 
 
+pip install pdb2pqr
+
+apbs and friends work on mac
 
 
 
