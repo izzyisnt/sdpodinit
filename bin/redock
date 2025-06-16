@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+"""
+make_surfdock_inputs.py
+=======================
+
+Usage
+-----
+$ ./make_surfdock_inputs.py 3oy1 589
+                      ^^^^ ^^^
+                   PDB-id  resname
+
+Outputs (under SurfDock):
+    SurfDock/data/eval_sample_dirs/test_samples/3oy1/
+        ├── 3oy1_ligand.sdf
+        ├── 3oy1_ligand.mol2   (charged)
+        └── 3oy1_protein_processed.pdb
+"""
+import argparse
+import os
+import subprocess
+import sys
+from pathlib import Path
+from typing import List
+
+import requests
+from rdkit import Chem
+from rdkit.Chem import rdmolfiles
+
+###############################################################################
+# configuration
+###############################################################################
+WATER_CODES = {"HOH", "WAT", "H2O"}
+SURFDOCK_ROOT = Path("SurfDock/data/eval_sample_dirs/test_samples")
+
+###############################################################################
+# helpers
+###############################################################################
+def is_water(code: str) -> bool:
+    return code.strip() in WATER_CODES
+
+
+def sh(cmd: List[str]) -> None:
+    """Run *cmd* (list of args).  Abort on non-zero exit."""
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit(f"❌ Command failed: {' '.join(cmd)}\n{e}")
+
+
+def download_pdb(pdb_id: str, dest: Path) -> None:
+    url = f"https://files.rcsb.org/download/{pdb_id}.pdb"
+    r = requests.get(url, timeout=15)
+    if not r.ok:
+        sys.exit(f"❌ Download failed ({r.status_code}) for {pdb_id}")
+    dest.write_text(r.text)
+    print(f"✅  Downloaded {pdb_id}.pdb")
+
+
+def extract(pdb_in: Path, lig_res: str, out_dir: Path) -> None:
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    lig_pdb_tmp = out_dir / "tmp_lig.pdb"
+    lig_sdf = out_dir / f"{pdb_in.stem}_ligand.sdf"
+    lig_mol2 = out_dir / f"{pdb_in.stem}_ligand.mol2"
+    prot_pdb = out_dir / f"{pdb_in.stem}_protein_processed.pdb"
+
+    ligand_lines, receptor_lines = [], []
+
+    with pdb_in.open() as fh:
+        for line in fh:
+            if not line.startswith(("ATOM", "HETATM", "END")):
+                continue
+
+            resname = line[17:20]
+
+            if line.startswith("HETATM") and resname == lig_res:
+                ligand_lines.append(line)
+                continue
+
+            if line.startswith("END"):
+                receptor_lines.append(line)
+                continue
+
+            if is_water(resname):
+                continue
+
+            if resname != lig_res:
+                receptor_lines.append(line)
+
+    if not ligand_lines:
+        sys.exit(f"❌ No HETATM for residue “{lig_res}” found.")
+
+    # ---------------------------------------------------------------- ligand
+    lig_pdb_tmp.write_text("".join(ligand_lines))
+    mol = Chem.MolFromPDBFile(str(lig_pdb_tmp), removeHs=False)
+    lig_pdb_tmp.unlink(missing_ok=True)
+    if mol is None:
+        sys.exit("❌ RDKit could not parse ligand coordinates.")
+
+    rdmolfiles.SDWriter(str(lig_sdf)).write(mol)
+    print(f"🧪  Ligand → {lig_sdf.name}")
+
+    # charges + MOL2 (Open Babel required)
+    sh(["obabel", str(lig_sdf), "-O", str(lig_mol2), "--partialcharge", "gasteiger"])
+    print(f"⚡  Charged MOL2 → {lig_mol2.name}")
+
+    # ---------------------------------------------------------------- protein
+    prot_pdb.write_text("".join(receptor_lines))
+    print(f"🧬  Receptor → {prot_pdb.name}")
+
+
+###############################################################################
+# main
+###############################################################################
+def main() -> None:
+    ap = argparse.ArgumentParser(description="Generate SurfDock-ready inputs in one go.")
+    ap.add_argument("pdb_id", help="4-letter PDB code (e.g. 3oy1)")
+    ap.add_argument("resname", help="ligand residue name (e.g. 589 or LIG)")
+    args = ap.parse_args()
+
+    pdb_id = args.pdb_id.lower()
+    res = args.resname.upper()
+
+    raw_pdb = Path(f"{pdb_id}.pdb")
+    if not raw_pdb.exists():
+        download_pdb(pdb_id, raw_pdb)
+
+    dest = SURFDOCK_ROOT / pdb_id
+    extract(raw_pdb, res, dest)
+
+    print(f"🎉  All set: {dest.relative_to(Path.cwd())}")
+
+
+if __name__ == "__main__":
+    main()
