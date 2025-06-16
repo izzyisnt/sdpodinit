@@ -1,32 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
-  echo "❌  usage: $0 <target_name>"
-  exit 1
+TARGET=${1:? "Usage: $0 <target_name>"}
+
+SRC_DIR="."                          # assume ligand.sdf and protein.pdb in CWD
+DST_DIR="$SURFDOCK_ROOT/data/eval_sample_dirs/test_samples/$TARGET"
+mkdir -p "$DST_DIR"
+
+# Build ligand.mol2 with charges if it does not exist yet
+if [[ ! -f "$SRC_DIR/ligand.mol2" ]]; then
+    echo "⚡  Generating ligand.mol2 with Gasteiger charges"
+    obabel "$SRC_DIR/ligand.sdf" -h --partialcharge gasteiger \
+           -omol2 -O "$SRC_DIR/ligand.mol2"
 fi
 
-TARGET=$1
-DEST_DIR="/root/SurfDock/data/eval_sample_dirs/test_samples/${TARGET}"
+cp "$SRC_DIR/ligand.sdf"              "$DST_DIR/${TARGET}_ligand.sdf"
+cp "$SRC_DIR/ligand.mol2"             "$DST_DIR/${TARGET}_ligand.mol2"
+cp "$SRC_DIR/protein.pdb"             "$DST_DIR/${TARGET}_protein_processed.pdb"
 
-echo "📦  Preparing SurfDock inputs for   $TARGET"
-echo "🔸 destination directory           $DEST_DIR"
-mkdir -p "$DEST_DIR"
-
-# ---------- sanity checks ----------
-[[ -f ligand.sdf   ]] || { echo "❌ ligand.sdf not found";   exit 1; }
-[[ -f protein.pdb  ]] || { echo "❌ protein.pdb not found";  exit 1; }
-
-# ---------- copy & rename ----------
-cp ligand.sdf      "$DEST_DIR/${TARGET}_ligand.sdf"
-echo "✅ copied ligand.sdf      → ${TARGET}_ligand.sdf"
-
-if [[ -f ligand.mol2 ]]; then
-  cp ligand.mol2    "$DEST_DIR/${TARGET}_ligand.mol2"
-  echo "✅ copied ligand.mol2    → ${TARGET}_ligand.mol2"
-fi
-
-cp protein.pdb     "$DEST_DIR/${TARGET}_protein_processed.pdb"
-echo "✅ copied protein.pdb    → ${TARGET}_protein_processed.pdb"
-
-echo "🎉  SurfDock inputs ready in $DEST_DIR"
+echo "✅  SurfDock inputs ready in $DST_DIR"
