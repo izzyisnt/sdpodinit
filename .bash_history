@@ -1221,3 +1221,51 @@ git commit -m "..."
 git push
 git pull
 ls -al
+ls
+cd SurfDock/
+ls
+python get_pocket/computeTargetMesh_test_samples.py --input_pdb 3oy1
+ls get_pocket/
+python get_pocket/get_pocket.py --pdb_id 3oy1
+ls
+ls bash_scripts/
+ls -lR
+python comp_surface/prepare_target/computeTargetMesh_test_samples.py   --input_pdb 3oy1   --data_dir .
+ls
+cat bash_scripts/test_scripts/eval_samples.sh 
+ls
+pwd
+cd ..
+ls
+cat > foo.py
+python foo.py 3OY1 589
+ls -l ligand.sdf 
+ls -l protein.pdb 
+vi ligand.sdf 
+git status
+git add .
+git commit -m "prep pdb for eval"
+git push
+git pull;
+ls
+ls results/
+ls
+ls collected_results/
+git rmdir collected_results/
+git rm collected_results/
+rmdir collected_results/
+ls
+ls bin
+ls
+sl bin
+ls bin
+ls
+ls bin
+chmod 755 bin/geninput 
+which geninput
+vi ~/.bashrc
+bin/geninput 3OY1 598
+vi 3oy1.pdb 
+bin/geninput 3OY1 589
+apbrs protein.pdb 
+apbs protein.pdb 
