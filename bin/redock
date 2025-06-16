@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """
-make_surfdock_inputs.py
-=======================
+redock – one‑shot SurfDock input generator
 
 Usage
 -----
-$ ./make_surfdock_inputs.py 3oy1 589
-                      ^^^^ ^^^
-                   PDB-id  resname
+$ bin/redock 3oy1 589
+             └──┬──┘ └─ ligand residue name / number (3‑letter or 3‑digit)
 
-Outputs (under SurfDock):
-    SurfDock/data/eval_sample_dirs/test_samples/3oy1/
-        ├── 3oy1_ligand.sdf
-        ├── 3oy1_ligand.mol2   (charged)
-        └── 3oy1_protein_processed.pdb
+Creates inside SurfDock’s test‑samples tree:
+    <pdb>/
+        <pdb>_ligand.sdf               (title line fixed)
+        <pdb>_ligand.mol2              (Gasteiger charges)
+        <pdb>_protein_processed.pdb    (waters & ligand stripped)
+
+The folder is ready for `goeval` / SurfDock.
 """
+from __future__ import annotations
+
 import argparse
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -24,111 +25,153 @@ from typing import List
 
 import requests
 from rdkit import Chem
-from rdkit.Chem import rdmolfiles
+from rdkit.Chem import AllChem, rdmolfiles
 
 ###############################################################################
-# configuration
+# Configuration
 ###############################################################################
-WATER_CODES = {"HOH", "WAT", "H2O"}
-SURFDOCK_ROOT = Path("SurfDock/data/eval_sample_dirs/test_samples")
+SURFDOCK_ROOT = Path("~/SurfDock").expanduser()
+TEST_SAMPLES  = SURFDOCK_ROOT / "data/eval_sample_dirs/test_samples"
+
+WATER_CODES   = {"HOH", "WAT", "H2O"}             # extend if necessary
 
 ###############################################################################
-# helpers
+# Helpers
 ###############################################################################
-def is_water(code: str) -> bool:
-    return code.strip() in WATER_CODES
-
-
-def sh(cmd: List[str]) -> None:
-    """Run *cmd* (list of args).  Abort on non-zero exit."""
-    try:
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError as e:
-        sys.exit(f"❌ Command failed: {' '.join(cmd)}\n{e}")
-
 
 def download_pdb(pdb_id: str, dest: Path) -> None:
-    url = f"https://files.rcsb.org/download/{pdb_id}.pdb"
-    r = requests.get(url, timeout=15)
+    """Download *pdb_id* from RCSB into *dest* (text mode)."""
+    url = f"https://files.rcsb.org/download/{pdb_id.upper()}.pdb"
+    r = requests.get(url, timeout=20)
     if not r.ok:
-        sys.exit(f"❌ Download failed ({r.status_code}) for {pdb_id}")
+        sys.exit(f"❌  Failed to download {pdb_id}: HTTP {r.status_code}")
     dest.write_text(r.text)
-    print(f"✅  Downloaded {pdb_id}.pdb")
+    print(f"✅  Downloaded {pdb_id}.pdb → {dest}")
 
 
-def extract(pdb_in: Path, lig_res: str, out_dir: Path) -> None:
-    out_dir.mkdir(parents=True, exist_ok=True)
+def to_aromatic_sdf(pdb_in: Path, resname: str, sdf_out: Path) -> None:
+    """Convert a single‑residue PDB *pdb_in* to SDF with proper bond orders."""
+    mol = Chem.MolFromPDBFile(str(pdb_in), removeHs=False, sanitize=True)
+    if mol is None:
+        sys.exit("❌  RDKit could not parse ligand coordinates")
 
-    lig_pdb_tmp = out_dir / "tmp_lig.pdb"
-    lig_sdf = out_dir / f"{pdb_in.stem}_ligand.sdf"
-    lig_mol2 = out_dir / f"{pdb_in.stem}_ligand.mol2"
-    prot_pdb = out_dir / f"{pdb_in.stem}_protein_processed.pdb"
+    try:
+        # Modern RDKit (>=2022.9): use template‑based bond assignment
+        tmpl = Chem.Mol(mol)
+        AllChem.EmbedMolecule(tmpl, randomSeed=42)   # any 3D template works
+        mol = Chem.AssignBondOrdersFromTemplate(tmpl, mol)  # type: ignore[attr-defined]
+    except AttributeError:
+        # Older RDKit – fall back to sanitise/kekulise path (may miss aromatics)
+        Chem.SanitizeMol(mol)
+        print("⚠️  Old RDKit – using fallback bond perception (aromatics may be lost)")
 
-    ligand_lines, receptor_lines = [], []
+    with rdmolfiles.SDWriter(str(sdf_out)) as w:
+        w.write(mol)
 
-    with pdb_in.open() as fh:
+
+def build_mol2(sdf_in: Path, mol2_out: Path, resname: str) -> None:
+    """Charge *sdf_in* → MOL2 with Gasteiger charges via Open Babel."""
+    # stage 1: add residue name so SurfDock keeps it in MOL2
+    p1 = subprocess.run(
+        ["obabel", str(sdf_in), "-osdf", "--addext", f"resname={resname}"],
+        check=True, capture_output=True,
+    )
+    # stage 2: generate MOL2 with charges from STDIN
+    subprocess.run(
+        [
+            "obabel", "-isdf", "-", "-omol2", "-O", str(mol2_out),
+            "--partialcharge", "gasteiger", "-a",
+        ],
+        input=p1.stdout,
+        check=True,
+    )
+
+###############################################################################
+# Core workflow
+###############################################################################
+
+def extract_and_write(pdb_file: Path, ligand: str, target_dir: Path) -> None:
+    """Split *pdb_file* into ligand SDF/MOL2 and water‑free receptor PDB."""
+    ligand_lines: List[str] = []
+    receptor_lines: List[str] = []
+
+    with pdb_file.open() as fh:
         for line in fh:
-            if not line.startswith(("ATOM", "HETATM", "END")):
+            rec = line[:6]
+            if rec not in ("ATOM  ", "HETATM", "END   "):
                 continue
 
-            resname = line[17:20]
+            res = line[17:20].strip()
 
-            if line.startswith("HETATM") and resname == lig_res:
+            if rec == "HETATM" and res == ligand:
                 ligand_lines.append(line)
                 continue
 
-            if line.startswith("END"):
+            if rec == "END   ":
                 receptor_lines.append(line)
                 continue
 
-            if is_water(resname):
-                continue
+            if res in WATER_CODES:
+                continue  # strip crystal waters
 
-            if resname != lig_res:
+            if res != ligand:
                 receptor_lines.append(line)
 
     if not ligand_lines:
-        sys.exit(f"❌ No HETATM for residue “{lig_res}” found.")
+        sys.exit(f"❌  No ligand {ligand} in {pdb_file.name}")
 
-    # ---------------------------------------------------------------- ligand
-    lig_pdb_tmp.write_text("".join(ligand_lines))
-    mol = Chem.MolFromPDBFile(str(lig_pdb_tmp), removeHs=False)
-    lig_pdb_tmp.unlink(missing_ok=True)
-    if mol is None:
-        sys.exit("❌ RDKit could not parse ligand coordinates.")
+    target_dir.mkdir(parents=True, exist_ok=True)
 
-    rdmolfiles.SDWriter(str(lig_sdf)).write(mol)
-    print(f"🧪  Ligand → {lig_sdf.name}")
+    # ---------------- Ligand SDF ----------------
+    tmp_pdb = target_dir / "lig_tmp.pdb"
+    tmp_pdb.write_text("".join(ligand_lines))
 
-    # charges + MOL2 (Open Babel required)
-    sh(["obabel", str(lig_sdf), "-O", str(lig_mol2), "--partialcharge", "gasteiger"])
-    print(f"⚡  Charged MOL2 → {lig_mol2.name}")
+    sdf = target_dir / f"{pdb_file.stem}_ligand.sdf"
+    to_aromatic_sdf(tmp_pdb, ligand, sdf)
+    tmp_pdb.unlink(missing_ok=True)
 
-    # ---------------------------------------------------------------- protein
-    prot_pdb.write_text("".join(receptor_lines))
-    print(f"🧬  Receptor → {prot_pdb.name}")
+    # fix the *title line* so SurfDock doesn’t embed file paths in its keys
+    with sdf.open("r+") as fh:
+        lines = fh.readlines()
+        lines[0] = f"{ligand}\n"         # e.g. "589" or "LIG"
+        fh.seek(0); fh.writelines(lines); fh.truncate()
 
+    # ---------------- Ligand MOL2 ---------------
+    mol2 = sdf.with_suffix(".mol2")
+    build_mol2(sdf, mol2, ligand)
+    print(f"🧪  Ligand SDF  → {sdf}")
+    print(f"⚡  Charged MOL2 → {mol2}")
+
+    # ---------------- Receptor PDB -------------
+    receptor = target_dir / f"{pdb_file.stem}_protein_processed.pdb"
+    receptor.write_text("".join(receptor_lines))
+    print(f"🧬  Receptor     → {receptor}")
 
 ###############################################################################
-# main
+# CLI entry‑point
 ###############################################################################
+
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Generate SurfDock-ready inputs in one go.")
-    ap.add_argument("pdb_id", help="4-letter PDB code (e.g. 3oy1)")
-    ap.add_argument("resname", help="ligand residue name (e.g. 589 or LIG)")
+    ap = argparse.ArgumentParser(description="Generate SurfDock inputs from a PDB")
+    ap.add_argument("pdb",    help="4‑letter PDB code, e.g. 3oy1")
+    ap.add_argument("ligand", help="Ligand residue name/number, e.g. 589 or LIG")
     args = ap.parse_args()
 
-    pdb_id = args.pdb_id.lower()
-    res = args.resname.upper()
+    pdb_id  = args.pdb.lower()
+    ligand  = args.ligand.upper()
 
-    raw_pdb = Path(f"{pdb_id}.pdb")
-    if not raw_pdb.exists():
-        download_pdb(pdb_id, raw_pdb)
+    pdb_path = Path(f"{pdb_id}.pdb")
+    if not pdb_path.exists():
+        download_pdb(pdb_id, pdb_path)
 
-    dest = SURFDOCK_ROOT / pdb_id
-    extract(raw_pdb, res, dest)
+    out_dir = TEST_SAMPLES / pdb_id
+    extract_and_write(pdb_path, ligand, out_dir)
 
-    print(f"🎉  All set: {dest.relative_to(Path.cwd())}")
+    try:
+        rel = out_dir.relative_to(Path.cwd())
+        print(f"🎉  All set: ./{rel}")
+    except ValueError:
+        print(f"🎉  All set: {out_dir}")
 
 
 if __name__ == "__main__":
