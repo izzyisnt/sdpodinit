@@ -1269,3 +1269,248 @@ vi 3oy1.pdb
 bin/geninput 3OY1 589
 apbrs protein.pdb 
 apbs protein.pdb 
+ls
+rm io.mc
+ls
+ls SurfDock/
+ls SurfDock/data/eval_sample_dirs/test_samples/3oy1/3oy1_*
+git rm -rf 3oy1
+git mv SurfDock/data/eval_sample_dirs/test_samples/3oy1 .
+ls
+ls SurfDock/data/eval_sample_dirs/test_samples/3oy1
+mkdir 3oy1
+cp -rp SurfDock/data/eval_sample_dirs/test_samples/3oy1/
+cp -rp SurfDock/data/eval_sample_dirs/test_samples/3oy1/* 3oy1
+ls 3oy1
+mv ligand.sdf  SurfDock/data/eval_sample_dirs/test_samples/3oy1/3oy1_ligand.sdf
+mv protein.pdb SurfDock/data/eval_sample_dirs/test_samples/3oy1/3oy1_protein_processed.pdb
+ls
+rm 3oy1.pdb 
+ls
+goeval
+alias
+grep eval README.md 
+alias goeval='cd /root/SurfDock/comp_surface/prepare_target && bash /root/SurfDock/bash_scripts/test_scripts/eval_samples.sh'
+goeval
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102
+rm -rf /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/3oy1*
+goeval
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/
+rm -rf /root/SurfDock/data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102
+rm -rf /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102
+goeval
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/3oy1_protein_processed_8A_3oy1_ligand/
+rm -rf /root/SurfDock/data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102
+rm -rf /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102
+GOEVAL_ARGS="--ligand_to_pocket_center=True" bash bash_scripts/test_scripts/eval_samples.sh
+pwd
+ls
+ls -alt
+date
+cd 
+ls;
+ls bin
+ls 3oy1/
+git status
+git add .
+git commit -m "geninput mols gave bad results"
+git push
+ls
+ls bin
+cat > foo.py
+python foo.py
+ls
+python foo.py --run repeat_250102
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/
+ls -l SurfDock/docking_result/SurfDock_eval_samples/
+ls
+vi README
+vi README.md 
+cat > foo.py
+python foo.py --run repeat_250102
+python foo.py
+cat > foo.py
+python foo.py
+ls
+ls /root/SurfDock/data/eval_sample_dirs/test_samples
+rm -rf /root/SurfDock/data/eval_sample_dirs/test_samples
+cp -r ./3oy1 /root/SurfDock/data/eval_sample_dirs/test_samples/3oy1
+cp -r ./3oy1 /root/SurfDock/data/eval_sample_dirs/test_samples
+goeval
+ls
+grep alias README.md 
+alias goeval='cd /root/SurfDock/comp_surface/prepare_target && bash /root/SurfDock/bash_scripts/test_scripts/eval_samples.sh'
+goeval
+ls
+cd /root/SurfDock/data/eval_sample_dirs/test_samples
+ls
+rm 3oy1_ligand.mol2 
+goeval
+ls
+rm foo.py
+cat > foo
+bash foo
+pwd
+ls
+ls results/
+cd results/3oy1
+ls
+ls -alt
+cd ..
+date
+ls -alt
+ls 3oy1
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/
+ls ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/
+*
+ls -R ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/
+ls
+cd
+ls
+rm foo
+cat > foo
+bash foo
+ls
+cd results/3oy1
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+ls
+cd SurfDock_docking_result/
+ls
+cd 3oy1_protein_processed_8A_3oy1_ligand/
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd 3oy1_results/
+ls
+cd docking_outputs/
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+ls;
+cd SurfDock_docking_result/
+ls
+cd 3oy1_protein_processed_8A_3oy1_ligand/
+ls
+pwd
+cd
+;s
+ls
+cd results/
+ls
+rm -rf 3oy1
+ls
+cd ..
+ls;
+mv foo getresults
+cat getresults 
+goeval
+ls
+grep alias README.md 
+`grep alias README.md`
+alias goeval='cd /root/SurfDock/comp_surface/prepare_target && bash /root/SurfDock/bash_scripts/test_scripts/eval_samples.sh'
+goeval
+ls
+cd
+ls
+mv getresults clean
+bash clean
+ls
+cd results/
+ls
+c 3oy1
+cd 3oy1
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+ls
+cd SurfDock_docking_result/
+ls
+cd 3oy1_protein_processed_8A_3oy1_ligand/
+ls
+cd
+s
+ls
+chmod 755 clean
+ls
+ls bin
+mv clean bin
+ls
+ls 3oy1/
+cat > foo
+ls
+ls results/
+rm -rf results/3oy1
+bash foo
+ls
+ls SurfDock/data/eval_sample_dirs/test_samples/3oy1/
+cat > foo
+bash foo
+cd results/
+ls
+ls 3oy1
+ls
+cd ..
+ls
+ls 3oy1
+ls
+mv foo bin/clean
+cat > foo
+bash foo
+bash foo 3oy1
+ls
+cp -rp /root/SurfDock/data/eval_sample_dirs/test_samples/3oy1 .
+ls 3oy1/
+ls 3oy1/3oy1
+ls
+cat > foo
+bash foo 3oy1
+ls /root/SurfDock/data/eval_sample_dirs/test_samples/3oy1
+rm -rf /root/SurfDock/data/eval_sample_dirs/test_samples/3oy1
+ls /root/SurfDock/data/eval_sample_dirs/test_samples/3oy1
+ls
+bash foo 3oy1
+ls /root/SurfDock/data/eval_sample_dirs/test_samples/3oy1
+grep alias README.md 
+goeval 
+ls
+cd
+ls
+ls results/
+rm -rf results/3oy1
+ls
+cat foo
+mv foo loadmols
+ls
+chmod 755 loadmols 
+mv loadmols bin
+s;
+ls bin
+ls
+ls bin
+chmod 755 bin/clean
+bin/clean
+cd results/
+ls
+ls 3oy1
+cd 3oy1
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+ls
+cd SurfDock_docking_result/3oy1_protein_processed_8A_3oy1_ligand/
+ls
+cd
+ls
+rm -rf results/3oy1
+ls
+ls 3oy1/
+ls
+ls results/

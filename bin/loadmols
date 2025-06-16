@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+if [ -z "$1" ]; then
+    echo "❌ Usage: $0 <target_name>"
+    exit 1
+fi
+
+TARGET=$1
+SRC_DIR="/root/$TARGET"
+DEST_DIR="/root/SurfDock/data/eval_sample_dirs/test_samples/$TARGET"
+
+echo "📦 Restoring SurfDock input files for: $TARGET"
+echo "🔹 From: $SRC_DIR"
+echo "🔸 To:   $DEST_DIR"
+
+mkdir -p "$DEST_DIR"
+
+# Copy only top-level .sdf and .pdb from the source folder
+for ext in sdf pdb mol2; do
+    for f in "$SRC_DIR"/*."$ext"; do
+        [ -e "$f" ] && cp "$f" "$DEST_DIR/" && echo "✅ Copied: $(basename "$f")"
+    done
+done
+
+echo "✅ Inputs restored to: $DEST_DIR"

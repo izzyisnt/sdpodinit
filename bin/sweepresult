@@ -1,0 +1,55 @@
+#!/bin/bash
+set -e
+
+# 1️⃣ Check arg
+if [ -z "$1" ]; then
+  echo "Usage: sweepresult <target>"
+  exit 1
+fi
+TARGET=$1
+
+# 2️⃣ Key paths
+INPUT_DIR="/root/SurfDock/data/eval_sample_dirs/test_samples/${TARGET}"
+DOCK_BASE="/root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result"
+RESULT_DIR="/root/results/${TARGET}"
+
+echo "📦 Finalising results for: $TARGET"
+echo "🔎 Input  : $INPUT_DIR"
+echo "🔎 Outputs: $DOCK_BASE/*${TARGET}*"
+echo "📁 Result : $RESULT_DIR"
+echo
+
+mkdir -p "$RESULT_DIR"
+
+# 3️⃣ Copy input ligand / protein
+cp -v "$INPUT_DIR"/*.sdf  "$RESULT_DIR/" 2>/dev/null || echo "⚠️  no ligand .sdf"
+cp -v "$INPUT_DIR"/*.mol2 "$RESULT_DIR/" 2>/dev/null || true
+cp -v "$INPUT_DIR"/*.pdb  "$RESULT_DIR/" 2>/dev/null || echo "⚠️  no protein .pdb"
+
+# 4️⃣ Locate SurfDock folder for this complex
+DOCK_DIR=$(find "$DOCK_BASE" -maxdepth 1 -type d -name "*${TARGET}*" | head -n 1)
+if [ ! -d "$DOCK_DIR" ]; then
+  echo "❌ Docking directory not found."
+  exit 1
+fi
+
+# 5️⃣ Pick highest-confidence pose (14th “_”-field = confidence)
+BEST_FILE=$(ls "$DOCK_DIR"/*.sdf | sort -t'_' -k14 -nr | head -n 1)
+
+if [ ! -f "$BEST_FILE" ]; then
+  echo "❌ No SDF poses in $DOCK_DIR"
+  exit 1
+fi
+
+echo "✅ Best pose file = $(basename "$BEST_FILE")"
+cp  -v "$BEST_FILE" "$RESULT_DIR/"
+ln  -sf "$(basename "$BEST_FILE")" "$RESULT_DIR/best.sdf"
+
+# 6️⃣ Now safe to clean
+echo
+echo "🧹 Cleaning SurfDock caches..."
+rm -rf /root/SurfDock/data/eval_sample_dirs/SurfDock_eval_samples/repeat_250102
+rm -rf /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102
+echo "✅ All done.   Results in $RESULT_DIR:"
+ls -1 "$RESULT_DIR"
+
