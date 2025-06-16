@@ -1,26 +1,32 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-if [ -z "$1" ]; then
-    echo "❌ Usage: $0 <target_name>"
-    exit 1
+if [[ $# -ne 1 ]]; then
+  echo "❌  usage: $0 <target_name>"
+  exit 1
 fi
 
 TARGET=$1
-SRC_DIR="/root/$TARGET"
-DEST_DIR="/root/SurfDock/data/eval_sample_dirs/test_samples/$TARGET"
+DEST_DIR="/root/SurfDock/data/eval_sample_dirs/test_samples/${TARGET}"
 
-echo "📦 Restoring SurfDock input files for: $TARGET"
-echo "🔹 From: $SRC_DIR"
-echo "🔸 To:   $DEST_DIR"
-
+echo "📦  Preparing SurfDock inputs for   $TARGET"
+echo "🔸 destination directory           $DEST_DIR"
 mkdir -p "$DEST_DIR"
 
-# Copy only top-level .sdf and .pdb from the source folder
-for ext in sdf pdb mol2; do
-    for f in "$SRC_DIR"/*."$ext"; do
-        [ -e "$f" ] && cp "$f" "$DEST_DIR/" && echo "✅ Copied: $(basename "$f")"
-    done
-done
+# ---------- sanity checks ----------
+[[ -f ligand.sdf   ]] || { echo "❌ ligand.sdf not found";   exit 1; }
+[[ -f protein.pdb  ]] || { echo "❌ protein.pdb not found";  exit 1; }
 
-echo "✅ Inputs restored to: $DEST_DIR"
+# ---------- copy & rename ----------
+cp ligand.sdf      "$DEST_DIR/${TARGET}_ligand.sdf"
+echo "✅ copied ligand.sdf      → ${TARGET}_ligand.sdf"
+
+if [[ -f ligand.mol2 ]]; then
+  cp ligand.mol2    "$DEST_DIR/${TARGET}_ligand.mol2"
+  echo "✅ copied ligand.mol2    → ${TARGET}_ligand.mol2"
+fi
+
+cp protein.pdb     "$DEST_DIR/${TARGET}_protein_processed.pdb"
+echo "✅ copied protein.pdb    → ${TARGET}_protein_processed.pdb"
+
+echo "🎉  SurfDock inputs ready in $DEST_DIR"
