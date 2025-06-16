@@ -1514,3 +1514,195 @@ ls
 ls 3oy1/
 ls
 ls results/
+ls
+ls bin
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+cat > foo
+ls
+bash foo
+ls
+cat >foo
+bash foo
+bash foo 3oy1
+ls
+ls results/3oy1
+ls 3oy1
+rm -rf results/3oy1
+ls
+ls 3oy1/
+ls 3oy1/3oy1
+cd 3oy1/
+ls
+ls -l
+ls -l 3oy1
+ls
+rm *sdf *pdb
+mv 3oy1/* .
+rmdir 3oy1
+ls
+cd ..
+s
+ls;
+bin/load 3oy1
+ls bin
+ls
+mv foo postporc.bash
+ls
+ls bin
+vi bin/clean
+rm bin/clean
+ls
+mv postporc.bash  bin/clean
+ls
+cd bin
+mv clean sweepresult
+cd ..
+ls
+cat > loadmols
+ls
+chmod 755 loadmols
+loadmols
+./loadmols 
+./loadmols 3oy1
+grep alias README.md 
+goeval
+alias goeval='cd /root/SurfDock/comp_surface/prepare_target && bash /root/SurfDock/bash_scripts/test_scripts/eval_samples.sh'
+goeval
+ls
+cd
+ls
+mv loadmols  bin
+ls bin
+chmod 755 bin/sweepresult 
+bin/sweepresult 
+bin/sweepresult  3oy1
+ls
+cd results/
+ls
+cd 3oy1
+ls
+pwd
+cd ..
+ls
+ls -alt
+ls
+cd ..
+ls
+cat bin/sweepresult 
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/3oy1_0
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/3oy1
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102
+pwd
+cd SurfDock/
+ls docking_result/
+cd docking_result/SurfDock_eval_samples/
+ls
+cd
+ls
+ls bin
+loadmols
+bin/loadmols 
+bin/loadmols 3oy1
+goeval
+ls
+cd
+ls
+cd SurfDock/
+ls
+cd docking_result/
+ls
+cd SurfDock_eval_samples/
+ls
+cd repeat_250102/
+ls
+cat test_samples_head_0_tail_10000_confidence_on_device_cuda\:0.csv 
+ls
+cd SurfDock_docking_result/
+ls
+ls 3oy1_protein_processed_8A_3oy1_ligand/
+cd
+s
+ls
+ls bin
+bin/sweepresult 3oy1
+ls results/3oy1/
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/
+ls
+ls bin
+bin/loadmols
+bin/loadmols 3oy1/
+goeval
+ls
+ls -l /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface/
+find /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/test_samples_8A_surface -name 'best*.sdf'
+cd
+ls
+cd SurfDock/
+ls
+cd docking_result/
+ls
+cd SurfDock_eval_samples/
+ls
+cd repeat_250102/
+ls
+pwd
+ls -l
+ls
+cd SurfDock_docking_result/
+ls
+cd 3oy1_protein_processed_8A_3oy1_ligand/
+ls
+pwd
+cd
+ls
+cat > foo
+bash foo
+bash foo 3oy1
+ls
+cd results/
+ls
+cd 3oy1
+ls
+ls -l
+ls best.sdf
+ls /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/3oy1_protein_processed_8A_3oy1_ligand/3oy1_3oy1_3oy1_ligand.sdf_file_inner_idx_0_sample_idx_9_rank_2_rmsd_0.7953551111262251_confidence_452.3999945540199.sdf
+ls
+cd
+ls
+cat > foo
+ls
+bash foo
+bash foo 3oy1
+ls
+ls results/3oy1
+rm -rf results/3oy1
+ls
+ls bin
+mv foo bin/sweepresult 
+chmod 755 bin/sweepresult 
+ls
+bin/loadmols
+bin/loadmols 3oy1/
+goeval 
+ls
+cd
+ls
+bin/sweepresult 
+bin/sweepresult  3oy1/
+bin/sweepresult  3oy1
+ls
+cd results/
+ls
+cd 3oy1
+ls
+ls -l best.sdf 
+ls;
+cd ..
+ls
+cd ..
+ls;
+git status
+git add .
+git commit -m "loadmols and sweepresult wrappers"
+git push
