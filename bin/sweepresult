@@ -33,8 +33,12 @@ if [ ! -d "$DOCK_DIR" ]; then
   exit 1
 fi
 
-# 5️⃣ Pick highest-confidence pose (14th “_”-field = confidence)
-BEST_FILE=$(ls "$DOCK_DIR"/*.sdf | sort -t'_' -k14 -nr | head -n 1)
+BEST_FILE=$(ls "$DOCK_DIR"/*.sdf | awk -F'confidence_' '{print $2"\t"$0}' | sort -nr | cut -f2- | head -n1)
+BEST_FILE=$(ls "$DOCK_DIR"/*rmsd_*.sdf | \
+  awk -F'_rmsd_' '{split($2, a, "_"); printf "%.6f\t%s\n", a[1], $0}' | \
+  sort -n | cut -f2- | head -n1)
+
+
 
 if [ ! -f "$BEST_FILE" ]; then
   echo "❌ No SDF poses in $DOCK_DIR"

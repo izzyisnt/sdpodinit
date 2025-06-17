@@ -71,11 +71,11 @@ def download_pdb(pdb_id: str, dest: Path) -> None:
 
 
 def assign_bond_orders(mol: Chem.Mol) -> Chem.Mol:
-    """Return *mol* with bond orders/aromaticity restored using template method."""
-    template = Chem.Mol(mol)  # copy
-    AllChem.EmbedMolecule(template, randomSeed=42)
-    return Chem.AssignBondOrdersFromTemplate(template, mol)  # type: ignore[attr-defined]
-
+    from rdkit.Chem import AllChem
+    # Use the Kekulized version of the input molecule as the "template"
+    template = Chem.Mol(mol)
+    AllChem.Compute2DCoords(template)
+    return AllChem.AssignBondOrdersFromTemplate(template, mol)
 
 def to_high_quality_sdf(pdb_in: Path, resname: str, sdf_out: Path) -> None:
     """Convert ligand PDB → SDF with proper bond orders/aromaticity preserved."""
