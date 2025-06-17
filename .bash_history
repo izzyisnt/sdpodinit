@@ -95,3 +95,12 @@ pwd
 ls
 ls -alt
 ls
+git pull
+ls
+cp ligand_in_target.sdf SurfDock/data/eval_sample_dirs/test_samples/7yl1/7yl1_ligand.sdf
+goeval
+cd
+bin/sweepresult 7yl1
+git add .
+git commit -m "7yl1 results"
+git push
