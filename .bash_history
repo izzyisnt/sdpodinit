@@ -142,3 +142,29 @@ bin/sweepresult 7yl1
 git add .
 git commit -m "pull clean same "
 git push
+ls
+git status
+git pull
+ls
+pwd
+s
+ls
+cat > foo.py
+ls SurfDock/data/eval_sample_dirs/test_samples/7yl1/7yl1_*
+python foo.py 35b.sdf 7yl1
+ls SurfDock/data/eval_sample_dirs/test_samples/7yl1
+ls
+vi foo.py 
+python foo.py 35b.sdf 7yl1
+ls SurfDock/data/eval_sample_dirs/test_samples/7yl1
+ls -l SurfDock/data/eval_sample_dirs/test_samples/7yl1
+rm SurfDock/data/eval_sample_dirs/test_samples/7yl1/7yl1.*
+goeval
+cd
+bin/sweepresult 7yl1
+ls -alt /root/results/7yl1/
+git status
+mv foo.py bin/loadlig.py
+git add .
+git commit -m "35b results"
+git push
