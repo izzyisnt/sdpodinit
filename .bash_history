@@ -111,3 +111,18 @@ cp -rp SurfDock/data/eval_sample_dirs/test_samples/7yl1 7yl1input
 git add .
 git commit -m "check mol2 vs sdf"
 git push
+ls
+obabel ligand_in_target.sdf -O ligand.mol2
+cp ligand.mol2 SurfDock/data/eval_sample_dirs/test_samples/7yl1/7yl1_ligand.mol2 
+goeval
+cd
+bin/sweepresult 7yl1
+goeval
+cd /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/*7yl1*
+ls
+cd
+ls
+git status
+git add .
+git commit -m "1.96 crossdock with .mol2 required"
+git push
