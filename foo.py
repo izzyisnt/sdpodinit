@@ -1,52 +1,50 @@
+
 #!/usr/bin/env python3
-"""auto_surfdock_ligand.py ── from IUPAC → aligned SurfDock input
+"""auto_surfdock_ligand.py – IUPAC → aligned SurfDock ligand
 
-CLI
----
+Quick use
+---------
 python auto_surfdock_ligand.py \
-    --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone" \
-    --protein 7yl1.pdb \
-    --prefix 7yl1              # SurfDock test_sample folder name
-    [--template-resn J6F]       # optional override
+  --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone" \
+  --protein 7yl1.pdb \
+  --prefix 7yl1  --template-resn J6F
 
-What it does
-------------
-1. Converts the **IUPAC name → SMILES** (Open Babel)
-2. Builds an RDKit mol, embeds 3‑D, minimises.
-3. Extracts the *native ligand* from the protein (largest HETATM or --template-resn).
-4. Shape‑aligns the new ligand onto that native ligand (RDKit O3A fallback).
-5. Writes `<prefix>_ligand.sdf` **in protein frame**.
-6. Generates `<prefix>_ligand.mol2` with Gasteiger charges (Open Babel).
-7. Copies both to:
-   SurfDock/data/eval_sample_dirs/test_samples/<prefix>/
+Creates `<prefix>_ligand.sdf/.mol2` aligned to the native ligand and copies
+into SurfDock/data/eval_sample_dirs/test_samples/<prefix>/
 
-Dependencies: RDKit, Open Babel (`obabel` CLI), optionally gemmi (for CIF→PDB).
+Deps: RDKit, Open Babel (obabel), optional gemmi (if protein is .cif)
 """
 from __future__ import annotations
 import argparse, subprocess, tempfile, pathlib, shutil, sys, re
 from typing import Tuple
-
 from rdkit import Chem
 from rdkit.Chem import AllChem, rdMolAlign, rdFMCS
 
 ###############################################################################
-# Helpers                                                                     #
+# Helper functions                                                             
 ###############################################################################
 
 def iupac_to_smiles(iupac: str) -> str:
-    """Use Open Babel to convert an IUPAC string to SMILES."""
-    try:
-        out = subprocess.check_output(["obabel", "-i", "name", iupac, "-osmi", "--errorlevel", "1"], text=True)
-    except FileNotFoundError:
-        sys.exit("❌ Open Babel (obabel) not found – cannot convert IUPAC to SMILES.")
-    smiles_line = out.strip().split("\n")[-1]
-    smi = smiles_line.split()[0]
-    if not re.match(r"[A-Za-z0-9@+\-\[\]\(\)=#$%.]+", smi):
-        sys.exit("❌ Failed to parse SMILES from Open Babel output")
-    return smi
+    """Convert an IUPAC name to SMILES using Open Babel (handles OB-3 and OB-2)."""
+    cmds = [
+        ["obabel", f"-:{iupac}", "-osmi", "--errorlevel", "1"],              # OB-3 inline syntax
+        ["obabel", "-i", "name", iupac, "-osmi", "--errorlevel", "1"]        # OB-2 classic syntax
+    ]
+    for cmd in cmds:
+        try:
+            out = subprocess.check_output(cmd, text=True, stderr=subprocess.DEVNULL)
+            if not out.strip():
+                continue  # empty -> try next
+            smiles_line = out.strip().split("\n")[-1]
+            tokens = smiles_line.split()
+            if tokens:
+                return tokens[0]
+        except subprocess.CalledProcessError:
+            continue
+    sys.exit("❌ Open Babel could not convert IUPAC → SMILES. Is `obabel` in PATH?")
 
 
-def smiles_to_optimised_sdf(smiles: str, out_path: pathlib.Path) -> pathlib.Path:
+def smiles_to_sdf(smiles: str, out_path: pathlib.Path) -> pathlib.Path:
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         sys.exit("❌ RDKit failed to parse SMILES")
@@ -60,81 +58,80 @@ def smiles_to_optimised_sdf(smiles: str, out_path: pathlib.Path) -> pathlib.Path
     Chem.MolToMolFile(mol, str(out_path))
     return out_path
 
-# ----------------- protein & ligand extraction ------------------------------
+###############################################################################
+# Protein & template extraction                                                
+###############################################################################
 
 def ensure_pdb(path: pathlib.Path) -> pathlib.Path:
     if path.suffix.lower() in {".pdb", ".ent"}:
         return path
     if path.suffix.lower() in {".cif", ".mmcif"}:
         try:
-            import gemmi  # noqa: F401
+            import gemmi  # noqa
         except ImportError:
-            sys.exit("❌ gemmi required for CIF → PDB conversion. `pip install gemmi`.")
-        pdb_tmp = pathlib.Path(tempfile.mkstemp(suffix=".pdb")[1])
-        subprocess.run(["gemmi", "convert", str(path), str(pdb_tmp)], check=True)
-        return pdb_tmp
-    sys.exit("❌ Protein file must be .pdb / .cif / .mmcif")
+            sys.exit("❌ gemmi needed for CIF conversion (`pip install gemmi`)")
+        tmp = pathlib.Path(tempfile.mkstemp(suffix=".pdb")[1])
+        subprocess.run(["gemmi", "convert", str(path), str(tmp)], check=True)
+        return tmp
+    sys.exit("❌ Protein must be .pdb / .cif / .mmcif")
 
 
-def extract_template(pdb: pathlib.Path, resn_override: str | None = None) -> Tuple[Chem.Mol, str]:
-    het_records: dict[str, list[str]] = {}
+def extract_template(pdb: pathlib.Path, override: str | None = None) -> Tuple[Chem.Mol, str]:
+    het: dict[str, list[str]] = {}
     with open(pdb) as fh:
         for line in fh:
-            if not line.startswith("HETATM"):
-                continue
-            rn = line[17:20].strip()
-            if rn in {"HOH", "WAT"}:
-                continue
-            het_records.setdefault(rn, []).append(line)
-    if not het_records:
-        sys.exit("❌ No ligand found in protein file")
-    chosen = resn_override if resn_override in het_records else max(het_records, key=lambda k: len(het_records[k]))
-    if resn_override and resn_override not in het_records:
-        print(f"[WARN] requested resn '{resn_override}' not present, using '{chosen}' instead")
-    block = "".join(het_records[chosen])
-    templ = Chem.MolFromPDBBlock(block, sanitize=False, removeHs=False)
+            if line.startswith("HETATM") and line[17:20].strip() not in {"HOH", "WAT"}:
+                rn = line[17:20].strip()
+                het.setdefault(rn, []).append(line)
+    if not het:
+        sys.exit("❌ No hetero-ligand found in protein file")
+    chosen = override if override in het else max(het, key=lambda k: len(het[k]))
+    if override and override not in het:
+        print(f"[WARN] resn '{override}' not found; using '{chosen}'")
+    templ = Chem.MolFromPDBBlock("".join(het[chosen]), sanitize=False, removeHs=False)
     Chem.SanitizeMol(templ)
     Chem.GetSymmSSSR(templ)
     templ.UpdatePropertyCache(False)
     return templ, chosen
 
-# ------------------ overlay --------------------------------------------------
+###############################################################################
+# Ligand overlay                                                               
+###############################################################################
 
 def overlay(probe_sdf: pathlib.Path, template: Chem.Mol) -> Tuple[pathlib.Path, float]:
     probe = Chem.MolFromMolFile(str(probe_sdf), removeHs=False)
     if probe is None:
-        sys.exit("❌ Cannot read probe ligand")
-    # try MCS first
+        sys.exit("❌ RDKit failed to load probe SDF")
     try:
         mcs = rdFMCS.FindMCS([probe, template], ringMatchesRingOnly=True, completeRingsOnly=True, timeout=5)
         patt = Chem.MolFromSmarts(mcs.smartsString)
-        ref_match = template.GetSubstructMatch(patt)
-        probe_match = probe.GetSubstructMatch(patt)
-        if len(ref_match) >= 3:
-            rms = rdMolAlign.AlignMol(probe, template, atomMap=list(zip(probe_match, ref_match)))
+        amap = list(zip(probe.GetSubstructMatch(patt), template.GetSubstructMatch(patt)))
+        if len(amap) >= 3:
+            rms = rdMolAlign.AlignMol(probe, template, atomMap=amap)
         else:
             raise ValueError
     except Exception:
-        print("[INFO] fallback to O3A shape align …")
+        print("[INFO] MCS small → falling back to O3A shape align …")
         o3a = rdMolAlign.GetO3A(probe, template)
         rms = o3a.Align()
     out_aligned = probe_sdf.with_name("aligned_" + probe_sdf.name)
     Chem.MolToMolFile(probe, str(out_aligned))
     return out_aligned, rms
 
-# ----------------- copy to SurfDock -----------------------------------------
+###############################################################################
+# Copy to SurfDock                                                             
+###############################################################################
 
-def copy_to_surfdock(sdf_path: pathlib.Path, protein_prefix: str):
-    target_dir = pathlib.Path("SurfDock/data/eval_sample_dirs/test_samples") / protein_prefix
-    target_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(sdf_path, target_dir / f"{protein_prefix}_ligand.sdf")
-    # mol2 conversion
-    mol2_path = target_dir / f"{protein_prefix}_ligand.mol2"
+def copy_to_surfdock(sdf: pathlib.Path, prefix: str):
+    dest = pathlib.Path("SurfDock/data/eval_sample_dirs/test_samples") / prefix
+    dest.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(sdf, dest / f"{prefix}_ligand.sdf")
+    mol2 = dest / f"{prefix}_ligand.mol2"
     try:
-        subprocess.run(["obabel", str(sdf_path), "-O", str(mol2_path), "--partialcharge", "gasteiger", "-xh"], check=True)
+        subprocess.run(["obabel", str(sdf), "-O", str(mol2), "--partialcharge", "gasteiger", "-xh"], check=True)
     except subprocess.CalledProcessError:
-        print("⚠️  Open Babel failed to create MOL2 – SDF copied only")
-    print(f"✅ Copied SurfDock inputs to {target_dir}")
+        print("⚠️  Open Babel MOL2 conversion failed; SDF only")
+    print(f"✅ SurfDock inputs ready in {dest}")
 
 ###############################################################################
 # Main                                                                         
@@ -143,21 +140,21 @@ def copy_to_surfdock(sdf_path: pathlib.Path, protein_prefix: str):
 def main():
     ap = argparse.ArgumentParser("Generate aligned SurfDock ligand from IUPAC name")
     ap.add_argument("--iupac", required=True, help="IUPAC name in quotes")
-    ap.add_argument("--protein", required=True, type=pathlib.Path, help="Protein PDB or mmCIF containing template ligand")
-    ap.add_argument("--prefix", required=True, help="SurfDock sample folder name, e.g. 7yl1")
-    ap.add_argument("--template-resn", help="Optional residue name to force as template")
+    ap.add_argument("--protein", required=True, type=pathlib.Path)
+    ap.add_argument("--prefix", required=True, help="SurfDock sample ID, e.g. 7yl1")
+    ap.add_argument("--template-resn", help="force template residue name (optional)")
     args = ap.parse_args()
 
     smiles = iupac_to_smiles(args.iupac)
     print("IUPAC → SMILES:", smiles)
-    sdf_temp = pathlib.Path(tempfile.mkstemp(suffix=".sdf")[1])
-    smiles_to_optimised_sdf(smiles, sdf_temp)
+    sdf_tmp = pathlib.Path(tempfile.mkstemp(suffix=".sdf")[1])
+    smiles_to_sdf(smiles, sdf_tmp)
 
-    pdb_path = ensure_pdb(args.protein)
-    templ_mol, chosen = extract_template(pdb_path, args.template_resn)
-    print("Template ligand used:", chosen)
+    pdb = ensure_pdb(args.protein)
+    templ, resn = extract_template(pdb, args.template_resn)
+    print("Template ligand:", resn)
 
-    aligned_sdf, rms = overlay(sdf_temp, templ_mol)
+    aligned_sdf, rms = overlay(sdf_tmp, templ)
     print(f"Overlay RMSD: {rms:.2f} Å")
 
     copy_to_surfdock(aligned_sdf, args.prefix)
