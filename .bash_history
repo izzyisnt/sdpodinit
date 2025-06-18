@@ -126,3 +126,19 @@ git status
 git add .
 git commit -m "1.96 crossdock with .mol2 required"
 git push
+git pull;
+ls
+ls results/
+goeval
+cd /root/SurfDock/docking_result/SurfDock_eval_samples/repeat_250102/SurfDock_docking_result/*7yl1*
+ls
+cd
+s
+ls
+ls biun
+ls bin
+bin/sweepresult 
+bin/sweepresult 7yl1
+git add .
+git commit -m "pull clean same "
+git push
