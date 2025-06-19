@@ -180,3 +180,49 @@ bin/sweepresult 7yl1
 git add .
 git commit -m "jun result"
 git push
+git pull
+ls
+head foo.py
+python foo.py --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"     --protein 7yl1.pdb     --prefix 7yl1
+ls
+python foo.py --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"     --protein 7yl1.pdb     --prefix 7yl1
+ls
+cat > foo.py
+python foo.py --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"     --protein 7yl1.pdb     --prefix 7yl1
+python foo.py --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"   --protein 7yl1.pdb     --prefix 7yl1
+python foo.py     --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"     --protein 7yl1.pdb     --prefix 7yl1     --template-resn J6F
+cat > foo.py
+python foo.py   --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"   --protein 7yl1.pdb   --prefix 7yl1   --template-resn J6F
+cat > foo.py
+python foo.py   --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"   --protein 7yl1.pdb   --prefix 7yl1   --template-resn J6F
+python foo.py   --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"   --protein 7yl1.pdb   --prefix 7yl1   --template-resn J6F
+cat > foo.py
+python foo.py   --iupac "Cyclopropyl[(3R)-3-{4-[6-hydroxy-2-(naphthalen-2-yl)-1H-benzimidazol-1-yl]pyrimidin-2-yl}amino]piperidin-1-yl]methanone"   --protein 7yl1.pdb   --prefix 7yl1   --template-resn J6F
+obabel
+ls
+cat > 35b.smi
+vi 35b.smi 
+obabel 35b.smiles -osdf -O 35b.sdf --gen3d  
+mv 35b.smi 35b.smiles
+obabel 35b.smiles -osdf -O 35b.sdf --gen3d  
+ls
+sl bin
+ls bin
+bin/loadmols 35b.sdf 7yl1
+python bin/loadmols 35b.sdf 7yl1
+vi bin/loadmols
+head bin/loadmols
+python bin/loadliginpocket.py 35b.sdf
+python bin/loadlig.py 35b_in_7yl1.sdf 7yl1
+ls -alt
+goeval
+cd
+ls
+bin/sweepresult 7yl1
+git add .
+git commit -m "35b_2 run"
+git push
+python jerryphase
+git pull
+python jerryphase
+ls

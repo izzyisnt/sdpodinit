@@ -4,61 +4,52 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from e3nn.o3 import Irreps, FullyConnectedTensorProduct, Linear
-from e3nn.nn import Gate
-from e3nn.o3 import rand_matrix_SO3
 from torch_geometric.nn import MessagePassing
 
-class GeoPhaseFormerLayer(nn.Module):
-    def __init__(self, irreps_in="0e + 1o", irreps_out="0e + 1o"):
-        super().__init__()
-        self.irreps_in = Irreps(irreps_in)
-        self.irreps_out = Irreps(irreps_out)
+# Replacement for e3nn.o3.rand_matrix_SO3
+def rand_matrix_SO3(batch_size=1, device="cpu"):
+    q = torch.randn(batch_size, 3, 3, device=device)
+    q1 = F.normalize(q[:, :, 0], dim=-1)
+    q2 = F.normalize(q[:, :, 1] - (q1 * q[:, :, 1]).sum(-1, keepdim=True) * q1, dim=-1)
+    q3 = torch.cross(q1, q2, dim=-1)
+    return torch.stack([q1, q2, q3], dim=-1)  # shape: (B, 3, 3)
 
-        self.tp = FullyConnectedTensorProduct(self.irreps_in, self.irreps_in, self.irreps_out)
-        self.linear = Linear(self.irreps_out, self.irreps_out)
+class GeoPhaseFormerLayer(nn.Module):
+    def __init__(self, feature_dim=16):
+        super().__init__()
+        self.feature_dim = feature_dim
+        self.linear = nn.Linear(feature_dim, feature_dim)
 
     def forward(self, x_feat, x_vec, edge_index, edge_attr, phase_accum):
-        # x_feat: (N, scalar features)
-        # x_vec: (N, 3) vector features
-        # edge_index: (2, E)
-        # edge_attr: (E, 3) relative positions
-        # phase_accum: (N, 3x3) accumulated SO(3) matrices per node
-
         row, col = edge_index
         rel_vec = x_vec[row] - x_vec[col] + edge_attr
 
-        # Compute rotation transport (R_ij): map from col -> row direction
-        # This is a simplification: in practice, learn or derive R_ij from geometry
-        R_ij = torch.stack([rand_matrix_SO3() for _ in range(edge_index.size(1))], dim=0).to(x_feat.device)
+        R_ij = rand_matrix_SO3(batch_size=edge_index.size(1), device=x_feat.device)
 
-        # Accumulate phase per edge
         new_phase = torch.bmm(phase_accum[row], R_ij)
 
-        # Phase-sensitive message passing (attention modulated by phase difference)
         phase_diff = torch.einsum("bij,bjk->bik", new_phase, phase_accum[col].transpose(1, 2))
-        phase_score = phase_diff[:, 0, 0]  # crude placeholder
+        phase_score = phase_diff[:, 0, 0]
         weights = F.softmax(phase_score, dim=0)
 
-        # Transport features
-        msg = self.tp(x_feat[row], x_feat[col]) * weights.unsqueeze(-1)
+        x_src = x_feat[row]
+        x_dst = x_feat[col]
+        msg_raw = x_src * x_dst
+        msg = msg_raw * weights.unsqueeze(-1)
         out_feat = self.linear(msg)
-        out_vec = new_phase[:, :, 0]  # take transported direction
+        out_vec = new_phase[:, :, 0]
 
-        # Aggregate
         out_feat_aggr = torch.zeros_like(x_feat).index_add_(0, row, out_feat)
         out_vec_aggr = torch.zeros_like(x_vec).index_add_(0, row, out_vec)
 
         return out_feat_aggr, out_vec_aggr, new_phase
 
-
 class GeoPhaseFormer(nn.Module):
-    def __init__(self, num_layers=4):
+    def __init__(self, num_layers=4, feature_dim=16):
         super().__init__()
-        self.layers = nn.ModuleList([GeoPhaseFormerLayer() for _ in range(num_layers)])
+        self.layers = nn.ModuleList([GeoPhaseFormerLayer(feature_dim=feature_dim) for _ in range(num_layers)])
 
     def forward(self, x_feat, x_vec, edge_index, edge_attr):
-        # Initialize memory (identity rotation matrices)
         N = x_feat.size(0)
         phase_accum = torch.eye(3).unsqueeze(0).repeat(N, 1, 1).to(x_feat.device)
 
@@ -66,3 +57,21 @@ class GeoPhaseFormer(nn.Module):
             x_feat, x_vec, phase_accum = layer(x_feat, x_vec, edge_index, edge_attr, phase_accum)
 
         return x_feat, x_vec, phase_accum
+
+if __name__ == "__main__":
+    N = 10  # number of nodes
+    E = 20  # number of edges
+
+    x_feat = torch.randn(N, 16)
+    x_vec = torch.randn(N, 3)
+
+    edge_index = torch.randint(0, N, (2, E))
+    edge_attr = torch.randn(E, 3)
+
+    model = GeoPhaseFormer(num_layers=2, feature_dim=16)
+    x_feat_out, x_vec_out, phase_accum = model(x_feat, x_vec, edge_index, edge_attr)
+
+    print("Final scalar features:", x_feat_out.shape)
+    print("Final vector features:", x_vec_out.shape)
+    print("Accumulated phase matrices:", phase_accum.shape)
+
