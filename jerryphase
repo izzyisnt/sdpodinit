@@ -42,7 +42,8 @@ class GeoPhaseFormerLayer(nn.Module):
         out_feat_aggr = torch.zeros_like(x_feat).index_add_(0, row, out_feat)
         out_vec_aggr = torch.zeros_like(x_vec).index_add_(0, row, out_vec)
 
-        return out_feat_aggr, out_vec_aggr, new_phase
+        return out_feat_aggr, out_vec_aggr, phase_accum
+
 
 class GeoPhaseFormer(nn.Module):
     def __init__(self, num_layers=4, feature_dim=16):

@@ -226,3 +226,28 @@ python jerryphase
 git pull
 python jerryphase
 ls
+git pull
+python jerryphase
+vi jerryphase 
+python jerryphase
+vi jerryphase 
+python jerryphase
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+vi jerryphase 
+python jerryphase 
+git add .
+git commit -m "..."
+git push
